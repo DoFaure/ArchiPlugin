@@ -14,19 +14,17 @@ public class Appli {
 	public static void main(String[] args) {
 		Appli appli = new Appli();
 		appli.run();
-		appli.setDisplay(new DisplayStrategy());
-		appli.run();
 	}
 	
 	public Appli() {
-		display = new DisplayStrategyPlus();
-//		descriptionDisplayDisponibles = Loader.getDescriptionDisplay();
+
+		descriptionDisplayDisponibles = Loader.getDescriptionDisplay();
 
 	}
-	
-	public void setDisplay(IDisplayStrategy display) {
-		this.display = display;
-	}
+//	
+//	public void setDisplay(IDisplayStrategy display) {
+//		this.display = display;
+//	}
 	
 	private void run() {
 		Personne p = new Personne();
@@ -36,9 +34,9 @@ public class Appli {
 	}
 
 	private void affiche(Personne p) {
-//		if(display == null) {
-//			display = Loader.getDisplayFor(descriptionDisplayDisponibles);
-//		}
+		if(display == null) {
+			display = Loader.getDisplayFor(descriptionDisplayDisponibles.get(0));
+		}
 		display.affiche(p);
 	}
 	
