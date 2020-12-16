@@ -3,7 +3,7 @@ package appli.models;
 public class Products {
 	
 	private int price;
-	private float wheatAugmentation;
+	private double wheatAugmentation;
 	private String label;
 	/**
 	 * @return the price
@@ -20,13 +20,13 @@ public class Products {
 	/**
 	 * @return the wheatAugmentation
 	 */
-	public float getWheatAugmentation() {
+	public double getWheatAugmentation() {
 		return wheatAugmentation;
 	}
 	/**
 	 * @param wheatAugmentation the wheatAugmentation to set
 	 */
-	public void setWheatAugmentation(float wheatAugmentation) {
+	public void setWheatAugmentation(double wheatAugmentation) {
 		this.wheatAugmentation = wheatAugmentation;
 	}
 	/**
@@ -41,7 +41,7 @@ public class Products {
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	public Products(int price, float wheatAugmentation, String label) {
+	public Products(int price, double wheatAugmentation, String label) {
 		super();
 		this.price = price;
 		this.wheatAugmentation = wheatAugmentation;

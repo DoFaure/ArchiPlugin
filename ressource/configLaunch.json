@@ -9,22 +9,6 @@
             {
                 "name": "product-factory",
                 "dependencies": []
-            },
-            {
-                "name": "thing-factory1",
-                "dependencies": []
-            },
-            {
-                "name": "eat-action1",
-                "dependencies": []
-            },
-            {
-                "name": "sleep-action1",
-                "dependencies": []
-            },
-            {
-                "name": "read-action1",
-                "dependencies": []
             }
 		]
 	}
