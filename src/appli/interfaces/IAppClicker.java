@@ -2,7 +2,7 @@ package appli.interfaces;
 
 import appli.plateform.Loader;
 
-public interface IApp {
+public interface IAppClicker {
 	
 	public void run();
 	

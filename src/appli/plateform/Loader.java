@@ -1,28 +1,28 @@
 package appli.plateform;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
-import appli.interfaces.IApp;
-import plugins.application.App;
+import appli.interfaces.IAppClicker;
 
 public class Loader {
+	
+	// TODO reflechir à l'intêret d'avoir une classe application si on a qu'une seule application --> faire une application différente entre le fermier et le brasseur (avec plugins chargé différents)
 
+	// TODO : renommer la liste des descripteurs
 	private ArrayList<DescripteurPlugin> descriptionDisplayDisponibles = new ArrayList<DescripteurPlugin>();
 
 	private String path;
@@ -37,39 +37,20 @@ public class Loader {
 		}
 	}
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args)
+			throws IOException, ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 		Loader loader = new Loader();
 
 		// FIXME add manually plugin for test
+		List<Object> pluginDependencies = new ArrayList<Object>();
 
-		IApp app = new App();
-
-		// app.run();
-
+		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(1), null));
+		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(2), null));
+		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(3), null));
+		IAppClicker app = (IAppClicker) loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(0), pluginDependencies);
+		app.setLoader(loader);
+		app.run();
 	}
-
-//	public static ArrayList<DescripteurPlugin> getPlugin() {
-//
-//		Properties prop = new Properties();
-//		ArrayList<DescripteurPlugin> descripteurs = new ArrayList<DescripteurPlugin>();
-//		try {
-//			prop.load(new FileReader(CHEMIN));
-//
-//			String display = prop.getProperty("display");
-//
-//			String[] allDisplayer = display.split(";");
-//			for (String descripteur : allDisplayer) {
-//				String[] descripteurFields = descripteur.split(",");
-//				descripteurs.add(new DescripteurPlugin(descripteurFields[0], descripteurFields[1], descripteurFields[2]));
-//			}
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} finally {
-//			return descripteurs;
-//		}
-//
-//	}
 
 	private ArrayList<DescripteurPlugin> getPlugins(String path) throws IOException, ParseException {
 		FileReader pluginFileReader = new FileReader(path + "/plugins.json");
@@ -92,16 +73,14 @@ public class Loader {
 
 		for (Map.Entry<String, JsonElement> entry : entrySet) {
 			String name = entry.getKey();
-			String classname = entry.getValue().getAsJsonObject().get("class").toString();
-			String description = entry.getValue().getAsJsonObject().get("description").toString();
+			String classname = entry.getValue().getAsJsonObject().get("class").getAsString();
+			String description = entry.getValue().getAsJsonObject().get("description").getAsString();
 			System.out.println("name : " + name + ", classname : " + classname + ", description : " + description);
-			List<String> dependencies = new ArrayList();
+			List<String> dependencies = new ArrayList<String>();
 			if (entry.getValue().getAsJsonObject().get("dependencies").getAsJsonArray().size() > 0) {
-				entry.getValue().getAsJsonObject().get("dependencies")
-				.getAsJsonArray()
-				.forEach(item -> {
-					dependencies.add(item.getAsJsonObject().get("interface").toString());
-					
+				entry.getValue().getAsJsonObject().get("dependencies").getAsJsonArray().forEach(item -> {
+					dependencies.add(item.getAsJsonObject().get("interface").getAsString());
+
 				});
 			}
 			System.out.println("dependencies : " + dependencies);
@@ -109,6 +88,45 @@ public class Loader {
 			DescripteurPlugin descripteur = new DescripteurPlugin(name, classname, description, dependencies);
 			descriptionDisplayDisponibles.add(descripteur);
 		}
+	}
+
+	/**
+	 * Fonction temporaire permettant l'instanciation des plugins
+	 * 
+	 * @param descripteur
+	 * @param plugins     listes des plugins dependants listé dans le descripteur
+	 * @return
+	 */
+	private Object instanciatePlugin(DescripteurPlugin descripteur, List<Object> plugins) {
+
+		try {
+			if (descripteur.getDependencies().size() == 0) {
+				Object plugin = Class.forName(descripteur.getClassname()).newInstance();
+				return plugin;
+			} else {
+				Class<?>[] dependenciesNames = new Class<?>[descripteur.getDependencies().size()];
+
+				try {
+					for (int i = 0; i < descripteur.getDependencies().size(); i++) {
+						dependenciesNames[i] = Class.forName(descripteur.getDependencies().get(i));
+					}
+
+					Object plugin = Class.forName(descripteur.getClassname()).getDeclaredConstructor(dependenciesNames)
+							.newInstance(plugins.toArray());
+					return plugin;
+
+				} catch (ClassNotFoundException | SecurityException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
+				| SecurityException | InvocationTargetException e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 }

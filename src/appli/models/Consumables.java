@@ -1,6 +1,6 @@
 package appli.models;
 
-public class Consumable {
+public class Consumables {
 	private int price;
 	private int duration;
 	private float wheatAugmentation;
@@ -54,13 +54,19 @@ public class Consumable {
 		this.label = label;
 	}
 	
-	public Consumable(int price, int duration, float wheatAugmentation, String label) {
+	public Consumables(int price, int duration, float wheatAugmentation, String label) {
 		super();
 		this.price = price;
 		this.duration = duration;
 		this.wheatAugmentation = wheatAugmentation;
 		this.label = label;
 	}
+	@Override
+	public String toString() {
+		return "Consumable [price=" + price + ", duration=" + duration + ", wheatAugmentation=" + wheatAugmentation
+				+ ", label=" + label + "]";
+	}
+	
 	
 	
 }

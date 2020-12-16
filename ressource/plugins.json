@@ -1,29 +1,29 @@
 {
-	"application.interfaces.IDisplay": {
+	"appli.interfaces.IAppClicker": {
+        "config1": {
+            "class": "plugins.application.AppClicker",
+            "description": "Application avec un paysan",
+            "dependencies": [
+            	{
+            		"interface": "appli.interfaces.IDisplay1"
+            	},
+            	{
+            		"interface": "appli.interfaces.IProductFactory"
+            	},
+            	{
+            		"interface": "appli.interfaces.IConsumableFactory"
+            	}
+            ]
+        }
+    },
+    "appli.interfaces.IDisplay1": {
         "primaryDisplay": {
             "class": "plugins.displays.Display1",
             "description": "Affichage de base",
             "dependencies": []
         }
 	},
-	"application.interfaces.IAppli": {
-        "config1": {
-            "class": "plugins.applications.FarmerApplication",
-            "description": "Application avec un paysan",
-            "dependencies": [
-            	{
-            		"interface": "application.interfaces.IDisplay1"
-            	},
-            	{
-            		"interface": "application.interfaces.IProdcutFactory"
-            	},
-            	{
-            		"interface": "application.interfaces.IConsumableFactory"
-            	}
-            ]
-        }
-    },
-	"application.interfaces.IProducts": {
+	"appli.interfaces.IProducts": {
 		"product-factory" : {
 			"class": "plugins.factories.ProductFactory",
 			"description": "Creation des differents produits",
@@ -31,10 +31,10 @@
 		}
 
 	},
-	"application.interfaces.IConsumable" : {
+	"appli.interfaces.IConsumable" : {
 		"consumable-factory" : {
 			"class": "plugins.factories.ConsumableFactory",
-			"description": "Creation des differents consommable",
+			"description": "Creation des differents consommables",
 			"dependencies": []
 	   }
     }

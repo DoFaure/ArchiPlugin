@@ -1,5 +1,5 @@
 {
-	"application.interface.IAppli":{
+	"appli.interface.IAppClicker":{
 		"config" : "config1",
 		"dependencies" : [
 			{

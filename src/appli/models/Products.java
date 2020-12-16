@@ -48,6 +48,13 @@ public class Products {
 		this.label = label;
 	}
 	
+	@Override
+	public String toString() {
+		return "Products [price=" + price + ", wheatAugmentation=" + wheatAugmentation + ", label=" + label + "]";
+	}
+	
+	
+	
 	
 	
 }
