@@ -7,6 +7,8 @@ import appli.interfaces.IProductFactory;
 import appli.models.Products;
 
 public class ProductFactory implements IProductFactory {
+	
+	@Override
 	public List<Products> createFarmerProducts() {
 		
 		List<Products> productsFarmer = new ArrayList<Products>();
@@ -17,6 +19,11 @@ public class ProductFactory implements IProductFactory {
 		
 		
 		return productsFarmer;
+	}
+
+	@Override
+	public List<Products> createBrewerProducts() {
+		return null;
 	}
 
 }

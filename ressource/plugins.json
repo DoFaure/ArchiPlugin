@@ -1,0 +1,41 @@
+{
+	"application.interfaces.IDisplay": {
+        "primaryDisplay": {
+            "class": "plugins.displays.Display1",
+            "description": "Affichage de base",
+            "dependencies": []
+        }
+	},
+	"application.interfaces.IAppli": {
+        "config1": {
+            "class": "plugins.applications.FarmerApplication",
+            "description": "Application avec un paysan",
+            "dependencies": [
+            	{
+            		"interface": "application.interfaces.IDisplay1"
+            	},
+            	{
+            		"interface": "application.interfaces.IProdcutFactory"
+            	},
+            	{
+            		"interface": "application.interfaces.IConsumableFactory"
+            	}
+            ]
+        }
+    },
+	"application.interfaces.IProducts": {
+		"product-factory" : {
+			"class": "plugins.factories.ProductFactory",
+			"description": "Creation des differents produits",
+			"dependencies": []
+		}
+
+	},
+	"application.interfaces.IConsumable" : {
+		"consumable-factory" : {
+			"class": "plugins.factories.ConsumableFactory",
+			"description": "Creation des differents consommable",
+			"dependencies": []
+	   }
+    }
+}
