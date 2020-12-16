@@ -8,7 +8,6 @@ public class DescripteurPlugin {
 	String classname;
 	String description;
 	List<String> dependencies;
-	Object plugin; 
 	
 	public DescripteurPlugin(String name, String classname, String description, List<String> dependencies) {
 		this.name = name;
@@ -73,18 +72,5 @@ public class DescripteurPlugin {
 		this.dependencies = dependencies;
 	}
 	
-	public Object getPlugin() {
-		return this.plugin;
-	}
-	
-	public void setPlugin(Object plugin) {
-		this.plugin = plugin;
-	}
-
-
-	
-	
-	
-
 
 }
