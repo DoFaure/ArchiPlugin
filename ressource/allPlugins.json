@@ -1,0 +1,31 @@
+{
+	"application.interfaces.IDisplay": {
+        "primaryDisplay": {
+            "class": "plugins.displays.primaryDisplay",
+            "description": "Affichage de base",
+            "dependencies": []
+        }
+	},
+	"application.interfaces.IAppli": {
+        "config1": {
+            "class": "plugins.applications.FarmerApplication",
+            "description": "Application avec un paysan",
+            "dependencies": [
+
+            ]
+        }
+    },
+	"application.interface.IProducts": {
+		"product-factory" : {
+			"class": "plugins.",
+			"description": "",
+			"dependencies": []
+		}
+
+	},
+	"application.interface.Consumable" : {
+		"engrais" : {
+			
+		}
+	}
+}
