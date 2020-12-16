@@ -1,19 +1,21 @@
-package appli;
+package appli.plateform;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import data.Personne;
+import appli.interfaces.IDisplayStrategy;
+import appli.models.Personne;
 
 public class Loader {
 
 	IDisplayStrategy display;
 	private ArrayList<DescripteurPlugin> descriptionDisplayDisponibles;
 
-	final static String CHEMIN = "H:/Logiciel_Developement/Workspace_Java/ArchiPlugin/src/config.txt";
-
+//	final static String CHEMIN = "C:/Logiciel_Developement/Workspace_Java/ArchiPlugin/src/config.txt";
+//	final static String CHEMIN = "C:\Users\Jeremie\Documents\Ecole\M2MIAGE\ArchiLogicielle\Projet\ArchiPlugin\src/config.txt";
+	final static String CHEMIN = "C:/Users/adebar/eclipse-workspace/ArchiPlugin/src/config.txt";
 	
 	// CONSTRUCTOR
 	public Loader() {

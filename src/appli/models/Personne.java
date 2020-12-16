@@ -1,4 +1,4 @@
-package data;
+package appli.models;
 
 public class Personne {
 	int age=0;

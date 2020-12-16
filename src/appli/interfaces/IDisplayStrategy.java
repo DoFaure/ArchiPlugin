@@ -1,6 +1,6 @@
-package appli;
+package appli.interfaces;
 
-import data.Personne;
+import appli.models.Personne;
 
 public interface IDisplayStrategy {
 

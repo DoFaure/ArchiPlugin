@@ -1,1 +1,1 @@
-display=tiers.DisplayStrategy, Display de base; tiers.DisplayStrategyPlus, meilleur Display 
+display=appli.models.DisplayStrategy, Display de base; appli.models.DisplayStrategyPlus, meilleur Display 

@@ -1,4 +1,4 @@
-package appli;
+package appli.plateform;
 
 public class DescripteurPlugin {
 	

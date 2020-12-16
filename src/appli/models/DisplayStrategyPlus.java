@@ -1,7 +1,6 @@
-package tiers;
+package appli.models;
 
-import appli.IDisplayStrategy;
-import data.Personne;
+import appli.interfaces.IDisplayStrategy;
 
 public class DisplayStrategyPlus implements IDisplayStrategy {
 
