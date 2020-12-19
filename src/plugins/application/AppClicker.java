@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -62,6 +64,8 @@ public class AppClicker implements IAppClicker {
 	@Override
 	public void run() {
 
+		
+		// TODO modifie et remplacer PANEL par une nouvelle Frame
 		buttonFarmerClicker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Loader loader = new Loader();
@@ -80,10 +84,8 @@ public class AppClicker implements IAppClicker {
 				frame.getContentPane().revalidate();
 			}
 		});
-		
-			// TODO Make a Iframe menu
-			List<Products> farmerProducts = this.farmerDisplay.getProductFactory().createFarmerProducts();
-			this.farmerDisplay.displayProducts(farmerProducts);
+//			List<Products> farmerProducts = this.farmerDisplay.getProductFactory().createFarmerProducts();
+//			this.farmerDisplay.displayProducts(farmerProducts);
 
 //
 //		List<Consumables> farmerConsumables = this.farmerDisplay.getConsumableFactory().createFarmerConsumables();

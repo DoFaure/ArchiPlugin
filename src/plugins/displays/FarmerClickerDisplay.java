@@ -27,6 +27,8 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		farmerPanel.add(label);
 		this.productFactory = productFactory;
 		this.consumableFactory = consumableFactory;
+		
+		displayProducts(productFactory.createFarmerProducts());
 	}
 	
 	@Override
