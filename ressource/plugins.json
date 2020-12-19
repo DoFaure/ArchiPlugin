@@ -1,12 +1,9 @@
 {
-	"appli.interfaces.IAppClicker": {
-        "config1": {
-            "class": "plugins.application.AppClicker",
-            "description": "Application avec un paysan",
+	"appli.interfaces.IFarmerClickerDisplay": {
+        "farmerClickerConfig": {
+            "class": "plugins.displays.FarmerClickerDisplay",
+            "description": "Application clicker avec un paysan",
             "dependencies": [
-            	{
-            		"interface": "appli.interfaces.IDisplay1"
-            	},
             	{
             		"interface": "appli.interfaces.IProductFactory"
             	},
@@ -16,13 +13,6 @@
             ]
         }
     },
-    "appli.interfaces.IDisplay1": {
-        "primaryDisplay": {
-            "class": "plugins.displays.Display1",
-            "description": "Affichage de base",
-            "dependencies": []
-        }
-	},
 	"appli.interfaces.IProducts": {
 		"product-factory" : {
 			"class": "plugins.factories.ProductFactory",

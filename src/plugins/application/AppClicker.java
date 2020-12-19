@@ -1,50 +1,143 @@
 package plugins.application;
 
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import appli.interfaces.IAppClicker;
-import appli.interfaces.IConsumableFactory;
-import appli.interfaces.IDisplay1;
-import appli.interfaces.IProductFactory;
-import appli.models.Consumables;
+import appli.interfaces.IBrewerClickerDisplay;
+import appli.interfaces.IFarmerClickerDisplay;
 import appli.models.Products;
 import appli.plateform.Loader;
+import plugins.displays.FarmerClickerDisplay;
 
-public class AppClicker implements IAppClicker{
-	
+public class AppClicker implements IAppClicker {
+
+	JFrame frame = new JFrame(); // Window
+	JPanel panel = new JPanel(); // Panel contains components (buttons, text boxes, ...)
+	Container jframeContainer;
+	JButton buttonFarmerClicker = new JButton("Farmer Clicker"); // First button that launch Farmer clicker onClick
+	JButton buttonBrewerClicker = new JButton("Brewer Clicker"); // Second button that launch Brewer clicker onClick
+
 	private Loader loader;
-	
-	private IDisplay1 display1;
-	private IProductFactory productFactory;
-	private IConsumableFactory consumableFactory;
-	
-	public AppClicker(IDisplay1 display1, IProductFactory productFactory, IConsumableFactory consumableFactory ) {
-		super();
-		this.display1 = display1;
-		this.productFactory = productFactory;
-		this.consumableFactory = consumableFactory;
+	private FarmerClickerDisplay farmerDisplay;
+	private IFarmerClickerDisplay iFarmerDisplay;
+
+	// DEFAULT CONSTRUCTOR
+	public AppClicker() {
+		jframeContainer = frame.getContentPane();
+		panel.add(buttonFarmerClicker);
+		panel.add(buttonBrewerClicker);
+		frame.setContentPane(panel);
+
+		frame.setPreferredSize(new Dimension(400, 200));
+		frame.setLocation(700, 400); // window position at launch
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action launched when exit clicked
+		frame.pack();
+		frame.setVisible(true);
+
 	}
+
+	// CONSTRUCTOR FARMER CLICKER
+	public AppClicker(IFarmerClickerDisplay iFarmerDisplay) {
+		super();
+		this.iFarmerDisplay = iFarmerDisplay;
+	}
+
+	// EXAMPLE --> CONSTRUCTOR BREWER CLICKER
+	public AppClicker(IBrewerClickerDisplay breweryDisplay) {
+		super();
+	}
+
+	/*
+	 * Fonction principale
+	 */
 	@Override
 	public void run() {
-		List<Products> farmerProducts = this.productFactory.createFarmerProducts();
-		this.display1.displayProducts(farmerProducts);
+
+		buttonFarmerClicker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Loader loader = new Loader();
+				List<Object> pluginDependencies = new ArrayList<Object>();
+				pluginDependencies
+						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(1), null));
+				pluginDependencies
+						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(2), null));
+				FarmerClickerDisplay farmerDisplay = (FarmerClickerDisplay) loader
+						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
+				AppClicker.this.setFarmerDisplay(farmerDisplay);
+				frame.getContentPane().removeAll();
+				frame.getContentPane().invalidate();
+				AppClicker.this.setPanel(AppClicker.this.farmerDisplay.getFarmerPanel());
+				frame.setContentPane(getPanel());
+				frame.getContentPane().revalidate();
+			}
+		});
 		
-		List<Consumables> farmerConsumables = this.consumableFactory.createFarmerConsumables();
-		this.display1.displayConsumables(farmerConsumables);
+			// TODO Make a Iframe menu
+			List<Products> farmerProducts = this.farmerDisplay.getProductFactory().createFarmerProducts();
+			this.farmerDisplay.displayProducts(farmerProducts);
+
+//
+//		List<Consumables> farmerConsumables = this.farmerDisplay.getConsumableFactory().createFarmerConsumables();
+//		this.farmerDisplay.displayConsumables(farmerConsumables);
 
 	}
-	@Override
+
+	/**
+	 * @return the loader
+	 */
+	public Loader getLoader() {
+		return loader;
+	}
+
+	/**
+	 * @param loader the loader to set
+	 */
 	public void setLoader(Loader loader) {
 		this.loader = loader;
-		
 	}
-	@Override
-	public Loader getLoader() {
-		return this.loader;
-		
+
+	/**
+	 * @return the farmerDisplay
+	 */
+	public FarmerClickerDisplay getFarmerDisplay() {
+		return farmerDisplay;
 	}
-	
-	
-	
-	
+
+	/**
+	 * @param farmerDisplay the farmerDisplay to set
+	 */
+	public void setFarmerDisplay(FarmerClickerDisplay farmerDisplay) {
+		this.farmerDisplay = farmerDisplay;
+	}
+
+	/**
+	 * @return the frame
+	 */
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	/**
+	 * @return the panel
+	 */
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	/**
+	 * @param panel the panel to set
+	 */
+	public void setPanel(JPanel panel) {
+		this.panel = panel;
+	}
+
 }

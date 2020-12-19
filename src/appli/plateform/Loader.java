@@ -16,11 +16,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
-import appli.interfaces.IAppClicker;
+import appli.interfaces.IFarmerClickerDisplay;
+import plugins.application.AppClicker;
 
 public class Loader {
-	
-	// TODO reflechir à l'intêret d'avoir une classe application si on a qu'une seule application --> faire une application différente entre le fermier et le brasseur (avec plugins chargé différents)
+
+	// TODO reflechir à l'intêret d'avoir une classe application si on a qu'une
+	// seule application --> faire une application différente entre le fermier et le
+	// brasseur (avec plugins chargé différents)
 
 	// TODO : renommer la liste des descripteurs
 	private ArrayList<DescripteurPlugin> descriptionDisplayDisponibles = new ArrayList<DescripteurPlugin>();
@@ -39,16 +42,19 @@ public class Loader {
 
 	public static void main(String[] args)
 			throws IOException, ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		Loader loader = new Loader();
+//		Loader loader = new Loader();
 
 		// FIXME add manually plugin for test
-		List<Object> pluginDependencies = new ArrayList<Object>();
+//		List<Object> pluginDependencies = new ArrayList<Object>();
+//
+//		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(1), null));
+//		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(2), null));
+////		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(3), null));
+//		IFarmerClickerDisplay farmerDisplay =  (IFarmerClickerDisplay) loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(0), pluginDependencies);
+//		AppClicker app = new AppClicker(farmerDisplay);
+		AppClicker app = new AppClicker();
 
-		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(1), null));
-		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(2), null));
-		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(3), null));
-		IAppClicker app = (IAppClicker) loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(0), pluginDependencies);
-		app.setLoader(loader);
+//		app.setLoader(loader);
 		app.run();
 	}
 
@@ -97,7 +103,7 @@ public class Loader {
 	 * @param plugins     listes des plugins dependants listé dans le descripteur
 	 * @return
 	 */
-	private Object instanciatePlugin(DescripteurPlugin descripteur, List<Object> plugins) {
+	public Object instanciatePlugin(DescripteurPlugin descripteur, List<Object> plugins) {
 
 		try {
 			if (descripteur.getDependencies().size() == 0) {
@@ -127,6 +133,20 @@ public class Loader {
 			return null;
 		}
 
+	}
+
+	/**
+	 * @return the descriptionDisplayDisponibles
+	 */
+	public ArrayList<DescripteurPlugin> getDescriptionDisplayDisponibles() {
+		return descriptionDisplayDisponibles;
+	}
+
+	/**
+	 * @param descriptionDisplayDisponibles the descriptionDisplayDisponibles to set
+	 */
+	public void setDescriptionDisplayDisponibles(ArrayList<DescripteurPlugin> descriptionDisplayDisponibles) {
+		this.descriptionDisplayDisponibles = descriptionDisplayDisponibles;
 	}
 
 }
