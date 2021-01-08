@@ -78,7 +78,6 @@ public class AppClicker implements IAppClicker {
 						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
 				AppClicker.this.setFarmerDisplay(farmerDisplay);
 				frame.getContentPane().removeAll();
-				frame.getContentPane().invalidate();
 				AppClicker.this.setPanel(AppClicker.this.farmerDisplay.getFarmerPanel());
 				frame.setContentPane(getPanel());
 				frame.getContentPane().revalidate();
