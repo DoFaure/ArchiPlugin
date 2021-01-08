@@ -1,5 +1,6 @@
 package plugins.factories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import appli.interfaces.IConsumableFactory;
@@ -9,7 +10,13 @@ public class ConsumableFactory implements IConsumableFactory {
 
 	@Override
 	public List<Consumables> createFarmerConsumables() {
-		return null;
+		List<Consumables> consumablesFarmer = new ArrayList<Consumables>();
+		consumablesFarmer.add(new Consumables(25, 100, 2, "Bouteille d'eau"));
+		consumablesFarmer.add(new Consumables(12, 100, 3, "Coca-Cola"));
+		consumablesFarmer.add(new Consumables(100, 100, 5, "Engrais"));
+		consumablesFarmer.add(new Consumables(500, 100, 25, "Glyphosate"));
+		consumablesFarmer.add(new Consumables(1000, 100, 100, "SuperFarmer"));
+		return consumablesFarmer;
 	}
 
 	@Override
@@ -17,6 +24,5 @@ public class ConsumableFactory implements IConsumableFactory {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

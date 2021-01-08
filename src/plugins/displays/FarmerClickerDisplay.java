@@ -53,6 +53,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		nbWheatText.setEditable(false);
 		this.farmerPanel.add(nbWheatText);
 		displayProducts(productFactory.createFarmerProducts());
+		displayConsumables(consumableFactory.createFarmerConsumables());
 		clickerEvent();
 		farmerFrame.setPreferredSize(new Dimension(400, 400));
 		farmerFrame.setLocation(700, 400); // window position at launch
@@ -93,6 +94,25 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	public void displayConsumables(List<Consumables> consumables) {
 		if (consumables != null && !consumables.isEmpty()) {
 			for (Consumables consumable : consumables) {
+				JButton buttonConsumable = new JButton(consumable.getLabel());
+				JProgressBar progressBar = new JProgressBar(0, consumable.getPrice());
+				progressBar.setValue(nbWheat); 
+				listProgressBar.add(progressBar);
+				this.farmerPanel.add(buttonConsumable);
+				this.farmerPanel.add(progressBar);
+				buttonConsumable.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (FarmerClickerDisplay.this.nbWheat >= consumable.getPrice()) {
+							FarmerClickerDisplay.this.nbWheatByClick += consumable.getWheatAugmentation();
+							FarmerClickerDisplay.this.nbWheat -= consumable.getPrice();
+							//TODO duration
+							
+							updateComponents();
+						}
+					}
+				});
 				System.out.println(consumable.toString());
 			}
 		}
