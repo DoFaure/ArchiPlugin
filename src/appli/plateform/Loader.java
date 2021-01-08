@@ -16,7 +16,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
-import appli.interfaces.IFarmerClickerDisplay;
 import plugins.application.AppClicker;
 
 public class Loader {

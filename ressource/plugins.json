@@ -17,7 +17,7 @@
 		"product-factory" : {
 			"class": "plugins.factories.ProductFactory",
 			"description": "Creation des differents produits",
-			"dependencies": []
+			"dependencies":[]
 		}
 
 	},
@@ -25,7 +25,7 @@
 		"consumable-factory" : {
 			"class": "plugins.factories.ConsumableFactory",
 			"description": "Creation des differents consommables",
-			"dependencies": []
+			"dependencies":[]
 	   }
     }
 }

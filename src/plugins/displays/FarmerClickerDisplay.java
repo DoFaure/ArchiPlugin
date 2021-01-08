@@ -1,7 +1,9 @@
 package plugins.displays;
 
+import java.awt.Dimension;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -14,28 +16,37 @@ import plugins.factories.ConsumableFactory;
 import plugins.factories.ProductFactory;
 
 public class FarmerClickerDisplay implements IFarmerClickerDisplay {
-	
+
 	private IProductFactory productFactory;
 	private IConsumableFactory consumableFactory;
+	
+	private JFrame farmerFrame; // Window farmerClicker
 	private JPanel farmerPanel;
 	private JLabel label;
 	
 	public FarmerClickerDisplay(IProductFactory productFactory, IConsumableFactory consumableFactory ) {
 		super();
+		this.farmerFrame = new JFrame();
 		this.farmerPanel = new JPanel();
 		this.label = new JLabel();
-		farmerPanel.add(label);
+		farmerPanel.add(this.label);
 		this.productFactory = productFactory;
 		this.consumableFactory = consumableFactory;
 		
 		displayProducts(productFactory.createFarmerProducts());
+		farmerFrame.setPreferredSize(new Dimension(400, 400));
+		farmerFrame.setLocation(700, 400); // window position at launch
+		farmerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action launched when exit clicked
+		farmerFrame.pack();
+		farmerFrame.setVisible(true);
+	
 	}
 	
 	@Override
 	public void displayProducts(List<Products> products) {
 		if (products != null && !products.isEmpty()) {
 			for (Products product : products) {
-				label.setText(product.toString());
+				this.label.setText(product.toString());
 				System.out.println(product.toString());
 			}
 		}

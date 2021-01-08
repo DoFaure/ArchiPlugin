@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,13 +14,12 @@ import javax.swing.JPanel;
 import appli.interfaces.IAppClicker;
 import appli.interfaces.IBrewerClickerDisplay;
 import appli.interfaces.IFarmerClickerDisplay;
-import appli.models.Products;
 import appli.plateform.Loader;
 import plugins.displays.FarmerClickerDisplay;
 
 public class AppClicker implements IAppClicker {
 
-	JFrame frame = new JFrame(); // Window
+	JFrame menuFrame = new JFrame(); // Window
 	JPanel panel = new JPanel(); // Panel contains components (buttons, text boxes, ...)
 	Container jframeContainer;
 	JButton buttonFarmerClicker = new JButton("Farmer Clicker"); // First button that launch Farmer clicker onClick
@@ -34,16 +31,16 @@ public class AppClicker implements IAppClicker {
 
 	// DEFAULT CONSTRUCTOR
 	public AppClicker() {
-		jframeContainer = frame.getContentPane();
+		jframeContainer = menuFrame.getContentPane();
 		panel.add(buttonFarmerClicker);
 		panel.add(buttonBrewerClicker);
-		frame.setContentPane(panel);
+		menuFrame.setContentPane(panel);
 
-		frame.setPreferredSize(new Dimension(400, 200));
-		frame.setLocation(700, 400); // window position at launch
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action launched when exit clicked
-		frame.pack();
-		frame.setVisible(true);
+		menuFrame.setPreferredSize(new Dimension(400, 200));
+		menuFrame.setLocation(700, 400); // window position at launch
+		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action launched when exit clicked
+		menuFrame.pack();
+		menuFrame.setVisible(true);
 
 	}
 
@@ -76,19 +73,9 @@ public class AppClicker implements IAppClicker {
 						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(2), null));
 				FarmerClickerDisplay farmerDisplay = (FarmerClickerDisplay) loader
 						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
-				AppClicker.this.setFarmerDisplay(farmerDisplay);
-				frame.getContentPane().removeAll();
-				AppClicker.this.setPanel(AppClicker.this.farmerDisplay.getFarmerPanel());
-				frame.setContentPane(getPanel());
-				frame.getContentPane().revalidate();
+//				menuFrame.dispose();
 			}
 		});
-//			List<Products> farmerProducts = this.farmerDisplay.getProductFactory().createFarmerProducts();
-//			this.farmerDisplay.displayProducts(farmerProducts);
-
-//
-//		List<Consumables> farmerConsumables = this.farmerDisplay.getConsumableFactory().createFarmerConsumables();
-//		this.farmerDisplay.displayConsumables(farmerConsumables);
 
 	}
 
@@ -121,10 +108,17 @@ public class AppClicker implements IAppClicker {
 	}
 
 	/**
-	 * @return the frame
+	 * @return the menuFrame
 	 */
-	public JFrame getFrame() {
-		return frame;
+	public JFrame getMenuFrame() {
+		return menuFrame;
+	}
+
+	/**
+	 * @param menuFrame the menuFrame to set
+	 */
+	public void setMenuFrame(JFrame menuFrame) {
+		this.menuFrame = menuFrame;
 	}
 
 	/**
