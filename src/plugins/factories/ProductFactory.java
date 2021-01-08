@@ -13,9 +13,9 @@ public class ProductFactory implements IProductFactory {
 		
 		List<Products> productsFarmer = new ArrayList<Products>();
 		
-		productsFarmer.add(new Products(1, 0.1 , "Rateau"));
-		productsFarmer.add(new Products(1, 0.9 , "Moissonneuse"));
-		productsFarmer.add(new Products(1, 0.5 , "tracteur"));
+		productsFarmer.add(new Products(5, 1 , "Rateau"));
+		productsFarmer.add(new Products(200, 10 , "Moissonneuse"));
+		productsFarmer.add(new Products(75, 4 , "Tracteur"));
 		
 		
 		return productsFarmer;

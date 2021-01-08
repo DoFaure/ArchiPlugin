@@ -12,8 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import appli.interfaces.IAppClicker;
-import appli.interfaces.IBrewerClickerDisplay;
-import appli.interfaces.IFarmerClickerDisplay;
 import appli.plateform.Loader;
 import plugins.displays.FarmerClickerDisplay;
 
@@ -27,7 +25,6 @@ public class AppClicker implements IAppClicker {
 
 	private Loader loader;
 	private FarmerClickerDisplay farmerDisplay;
-	private IFarmerClickerDisplay iFarmerDisplay;
 
 	// DEFAULT CONSTRUCTOR
 	public AppClicker() {
@@ -42,17 +39,6 @@ public class AppClicker implements IAppClicker {
 		menuFrame.pack();
 		menuFrame.setVisible(true);
 
-	}
-
-	// CONSTRUCTOR FARMER CLICKER
-	public AppClicker(IFarmerClickerDisplay iFarmerDisplay) {
-		super();
-		this.iFarmerDisplay = iFarmerDisplay;
-	}
-
-	// EXAMPLE --> CONSTRUCTOR BREWER CLICKER
-	public AppClicker(IBrewerClickerDisplay breweryDisplay) {
-		super();
 	}
 
 	/*
@@ -73,7 +59,7 @@ public class AppClicker implements IAppClicker {
 						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(2), null));
 				FarmerClickerDisplay farmerDisplay = (FarmerClickerDisplay) loader
 						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
-//				menuFrame.dispose();
+				menuFrame.dispose();
 			}
 		});
 
