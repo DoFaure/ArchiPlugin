@@ -41,19 +41,10 @@ public class Loader {
 
 	public static void main(String[] args)
 			throws IOException, ParseException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-//		Loader loader = new Loader();
 
 		// FIXME add manually plugin for test
-//		List<Object> pluginDependencies = new ArrayList<Object>();
-//
-//		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(1), null));
-//		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(2), null));
-////		pluginDependencies.add(loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(3), null));
-//		IFarmerClickerDisplay farmerDisplay =  (IFarmerClickerDisplay) loader.instanciatePlugin(loader.descriptionDisplayDisponibles.get(0), pluginDependencies);
-//		AppClicker app = new AppClicker(farmerDisplay);
 		AppClicker app = new AppClicker();
 
-//		app.setLoader(loader);
 		app.run();
 	}
 

@@ -28,28 +28,31 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	private IProductFactory productFactory;
 	private IConsumableFactory consumableFactory;
 
-	private int nbWheat;
+	public static int nbWheat;
 	private int nbWheatByClick;
 
 	private JFrame farmerFrame; // Window farmerClicker
 	private JPanel farmerPanel;
-	private JTextField nbWheatText; // show number of wheat
-	private ArrayList<JProgressBar> listProgressBar = new ArrayList<JProgressBar>();
+	private static JTextField nbWheatText; // show number of wheat
+	private static ArrayList<JProgressBar> listProgressBar = new ArrayList<JProgressBar>();
 
 	public FarmerClickerDisplay(IProductFactory productFactory, IConsumableFactory consumableFactory) {
 		super();
-		this.nbWheat = 0;
+		FarmerClickerDisplay.nbWheat = 0;
 		this.nbWheatByClick = 1;
 		this.productFactory = productFactory;
 		this.consumableFactory = consumableFactory;
-
+		initialisationDisplay();
+	}
+	
+	public void initialisationDisplay() {
 		this.farmerFrame = new JFrame();
 		this.farmerPanel = new JPanel();
 		this.farmerPanel.add(new JLabel("FARM"));
 		this.farmerFrame.add(farmerPanel);
 
 		farmerFrame.setTitle("Farmer Clicker");
-		nbWheatText = new JTextField("Wheat :" + Integer.toString(this.nbWheat));
+		nbWheatText = new JTextField("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat));
 		nbWheatText.setEditable(false);
 		this.farmerPanel.add(nbWheatText);
 		displayProducts(productFactory.createFarmerProducts());
@@ -60,7 +63,6 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		farmerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action launched when exit clicked
 		farmerFrame.pack();
 		farmerFrame.setVisible(true);
-
 	}
 
 	@Override
@@ -77,9 +79,9 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (FarmerClickerDisplay.this.nbWheat >= product.getPrice()) {
-							FarmerClickerDisplay.this.nbWheatByClick += product.getWheatAugmentation();
-							FarmerClickerDisplay.this.nbWheat -= product.getPrice();
+						if (nbWheat >= product.getPrice()) {
+							nbWheatByClick += product.getWheatAugmentation();
+							nbWheat -= product.getPrice();
 							
 							updateComponents();
 						}
@@ -104,11 +106,10 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (FarmerClickerDisplay.this.nbWheat >= consumable.getPrice()) {
-							FarmerClickerDisplay.this.nbWheatByClick += consumable.getWheatAugmentation();
-							FarmerClickerDisplay.this.nbWheat -= consumable.getPrice();
-							//TODO duration
-							
+						if (nbWheat >= consumable.getPrice()) {
+							nbWheat -= consumable.getPrice();
+							consumable.startTimer();
+
 							updateComponents();
 						}
 					}
@@ -121,14 +122,14 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	public void clickerEvent() {
 		this.farmerPanel.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
-				FarmerClickerDisplay.this.nbWheat += FarmerClickerDisplay.this.nbWheatByClick;
+				nbWheat += nbWheatByClick;
 				updateComponents();
 			}
 		});
 	}
 	
-	public void updateComponents() {
-		nbWheatText.setText("Wheat :" + Integer.toString(FarmerClickerDisplay.this.nbWheat));
+	public static void updateComponents() {
+		nbWheatText.setText("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat));
 		for (JProgressBar progressBar : listProgressBar) {
 			progressBar.setValue(nbWheat);
 		}
