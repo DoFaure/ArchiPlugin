@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
+import appli.interfaces.ICo2Management;
 import appli.interfaces.IConsumableFactory;
 import appli.interfaces.IFarmerClickerDisplay;
 import appli.interfaces.IProductFactory;
@@ -36,7 +37,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	private static JTextField nbWheatText; // show number of wheat
 	private static ArrayList<JProgressBar> listProgressBar = new ArrayList<JProgressBar>();
 
-	public FarmerClickerDisplay(IProductFactory productFactory, IConsumableFactory consumableFactory) {
+	public FarmerClickerDisplay(IProductFactory productFactory, IConsumableFactory consumableFactory, ICo2Management Co2management) {
 		super();
 		FarmerClickerDisplay.nbWheat = 0;
 		this.nbWheatByClick = 1;

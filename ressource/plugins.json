@@ -9,6 +9,9 @@
             	},
             	{
             		"interface": "appli.interfaces.IConsumableFactory"
+            	},
+            	{
+            		"interface": "appli.interfaces.ICo2Management"
             	}
             ]
         }
@@ -27,5 +30,16 @@
 			"description": "Creation des differents consommables",
 			"dependencies":[]
 	   }
-    }
+    },
+    "appli.interfaces.Co2Management" : {
+   		"co2-management" : {
+   			"class" : "plugins.co2.Co2Management",
+   			"description": "Gestion du CO2 de la ferme ainsi que des produits à charger",
+   			"dependencies":[
+   				{
+   					"interface": "appli.interfaces.IProductCo2Factory"
+   				}
+   			]
+   		}
+   	}
 }

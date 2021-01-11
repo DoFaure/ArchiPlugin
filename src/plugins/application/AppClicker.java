@@ -57,6 +57,8 @@ public class AppClicker implements IAppClicker {
 						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(1), null));
 				pluginDependencies
 						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(2), null));
+				pluginDependencies
+						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(3), null));
 				FarmerClickerDisplay farmerDisplay = (FarmerClickerDisplay) loader
 						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
 				menuFrame.dispose();

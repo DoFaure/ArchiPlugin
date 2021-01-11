@@ -93,7 +93,7 @@ public class Consumables {
 	@Override
 	public String toString() {
 		return "Consumables [price=" + price + ", duration=" + duration + ", wheatAugmentation=" + wheatAugmentation
-				+ ", label=" + label + ", timer=" + timer + "]";
+				+ ", label=" + label + "";
 	}
 
 	public void startTimer() {
