@@ -51,16 +51,16 @@ public class AppClicker implements IAppClicker {
 		// TODO modifie et remplacer PANEL par une nouvelle Frame
 		buttonFarmerClicker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Loader loader = new Loader();
-				List<Object> pluginDependencies = new ArrayList<Object>();
-				pluginDependencies
-						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(1), null));
-				pluginDependencies
-						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(2), null));
-				pluginDependencies
-						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(3), null));
-				FarmerClickerDisplay farmerDisplay = (FarmerClickerDisplay) loader
-						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
+//				Loader loader = new Loader();
+//				List<Object> pluginDependencies = new ArrayList<Object>();
+//				pluginDependencies
+//						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(1), null));
+//				pluginDependencies
+//						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(2), null));
+//				pluginDependencies
+//						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(3), null));
+//				FarmerClickerDisplay farmerDisplay = (FarmerClickerDisplay) loader
+//						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
 				menuFrame.dispose();
 			}
 		});

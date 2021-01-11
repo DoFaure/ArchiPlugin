@@ -1,0 +1,28 @@
+{
+    "application.interfaces.IAppClicker": {
+        "name": "applicationClicker",
+        "dependencies": [
+        	{ 
+                "name" : "farmerClickerConfig", 
+        	    "dependencies" : [
+                    {
+                        "name": "product-factory",
+                        "dependencies": []
+                    },
+                    {
+                        "name": "consumable-factory",
+                        "dependencies": []
+                    },
+                    {
+                        "name": "co2-management",
+                        "dependencies": [
+                            {
+                                "name":"product-co2-factory"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

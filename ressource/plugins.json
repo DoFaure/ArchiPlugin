@@ -1,4 +1,15 @@
 {
+	 "application.interfaces.IAppClicker": {
+        "applicationClicker": {
+            "class": "plugins.applications.AppClicker",
+            "description": "Application principale",
+            "dependencies": [
+                {
+                    "interface": "application.interfaces.IFarmerClickerDisplay"
+                }
+            ]
+        }
+    },
 	"appli.interfaces.IFarmerClickerDisplay": {
         "farmerClickerConfig": {
             "class": "plugins.displays.FarmerClickerDisplay",
@@ -16,7 +27,7 @@
             ]
         }
     },
-	"appli.interfaces.IProducts": {
+	"appli.interfaces.IProductFactory": {
 		"product-factory" : {
 			"class": "plugins.factories.ProductFactory",
 			"description": "Creation des differents produits",
@@ -24,22 +35,30 @@
 		}
 
 	},
-	"appli.interfaces.IConsumable" : {
+	"appli.interfaces.IConsumableFactory" : {
 		"consumable-factory" : {
 			"class": "plugins.factories.ConsumableFactory",
 			"description": "Creation des differents consommables",
 			"dependencies":[]
 	   }
     },
-    "appli.interfaces.Co2Management" : {
+    "appli.interfaces.ICo2Management" : {
    		"co2-management" : {
    			"class" : "plugins.co2.Co2Management",
    			"description": "Gestion du CO2 de la ferme ainsi que des produits à charger",
-   			"dependencies":[
+   			"dependencies": [
    				{
    					"interface": "appli.interfaces.IProductCo2Factory"
    				}
    			]
    		}
-   	}
+   	},
+   	"appli.interfaces.IProductCo2Factory": {
+		"product-co2-factory" : {
+			"class": "plugins.factories.ProductCo2Factory",
+			"description": "Creation des differents produits pour eliminer le co2",
+			"dependencies":[]
+		}
+
+	}
 }
