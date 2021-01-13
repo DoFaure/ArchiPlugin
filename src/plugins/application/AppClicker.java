@@ -1,6 +1,5 @@
 package plugins.application;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,16 +24,6 @@ public class AppClicker implements IAppClicker {
 	public AppClicker(IFarmerClickerDisplay farmerDisplay, IBrewerClickerDisplay brewerDisplay) {
 		this.farmerDisplay = farmerDisplay;
 		this.brewerDisplay = brewerDisplay;
-//		panel.add(buttonFarmerClicker);
-//		panel.add(buttonBrewerClicker);
-//		menuFrame.setContentPane(panel);
-//
-//		menuFrame.setPreferredSize(new Dimension(400, 200));
-//		menuFrame.setLocation(700, 400); // window position at launch
-//		menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action launched when exit clicked
-//		menuFrame.pack();
-//		menuFrame.setVisible(true);
-
 	}
 
 	/*

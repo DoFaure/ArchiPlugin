@@ -89,7 +89,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	}
 
 	@Override
-	public void displayProducts(List<Products> products) {
+	public void displayProducts(List<?> products) {
 		JLabel productsLabel = new JLabel("Produits :");
 		c.gridx = objectXDisplay;
 		c.gridy = objectYDisplay;
@@ -98,11 +98,12 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		objectXDisplay++;
 		
 		if (products != null && !products.isEmpty()) {
-			for (Products product : products) {
+			for (Object productObject : products) {
 				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) {
 					objectXDisplay = 1;
 					objectYDisplay += 2;
 				}
+				Products product = (Products) productObject; 
 				
 				JButton buttonProduct = new JButton(product.getLabel() + " (+ " + (int) product.getWheatAugmentation() + "/c)");
 				c.gridx = objectXDisplay;
@@ -117,9 +118,9 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				System.out.println(c.gridx);
 				System.out.println(c.gridy);
 				listProgressBar.add(progressBar);
-
+	
 				buttonProduct.addActionListener(new ActionListener() {
-
+	
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (nbWheat >= product.getPrice()) {

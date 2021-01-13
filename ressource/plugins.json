@@ -19,7 +19,7 @@
             "description": "Application clicker avec un paysan",
             "dependencies": [
             	{
-            		"interface": "appli.interfaces.IProductFactory"
+            		"interface": "appli.interfaces.IProductsSimpleFactory"
             	},
             	{
             		"interface": "appli.interfaces.IConsumableFactory"
@@ -38,9 +38,9 @@
             ]
         }
     },
-	"appli.interfaces.IProductFactory": {
+	"appli.interfaces.IProductsSimpleFactory": {
 		"product-factory" : {
-			"class": "plugins.factories.ProductFactory",
+			"class": "plugins.factories.ProductsSimpleFactory",
 			"description": "Creation des differents produits",
 			"dependencies":[]
 		}
