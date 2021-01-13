@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import appli.models.Consumables;
 import appli.models.Products;
 import plugins.factories.ConsumableFactory;
-import plugins.factories.ProductFactory;
+import plugins.factories.ProductsSimpleFactory;
 
 public interface IFarmerClickerDisplay {
 	
@@ -17,7 +17,7 @@ public interface IFarmerClickerDisplay {
 
 	void displayConsumables(List<Consumables> consumables);
 	
-	ProductFactory getProductFactory();
+	ProductsSimpleFactory getProductFactory();
 	
 	ConsumableFactory getConsumableFactory();
 	

@@ -22,15 +22,15 @@ import javax.swing.JTextField;
 import appli.interfaces.ICo2Management;
 import appli.interfaces.IConsumableFactory;
 import appli.interfaces.IFarmerClickerDisplay;
-import appli.interfaces.IProductFactory;
+import appli.interfaces.IProductsSimpleFactory;
 import appli.models.Consumables;
 import appli.models.Products;
 import plugins.factories.ConsumableFactory;
-import plugins.factories.ProductFactory;
+import plugins.factories.ProductsSimpleFactory;
 
 public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
-	private IProductFactory productFactory;
+	private IProductsSimpleFactory productSimpleFactory;
 	private IConsumableFactory consumableFactory;
 
 	public static int nbWheat;
@@ -47,11 +47,11 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	private static JTextField nbWheatText; // show number of wheat
 	private static ArrayList<JProgressBar> listProgressBar = new ArrayList<JProgressBar>();
 
-	public FarmerClickerDisplay(IProductFactory productFactory, IConsumableFactory consumableFactory, ICo2Management Co2management) {
+	public FarmerClickerDisplay(IProductsSimpleFactory productSimpleFactory, IConsumableFactory consumableFactory, ICo2Management Co2management) {
 		super();
 		FarmerClickerDisplay.nbWheat = 0;
 		this.nbWheatByClick = 1;
-		this.productFactory = productFactory;
+		this.productSimpleFactory = productSimpleFactory;
 		this.consumableFactory = consumableFactory;
 		initialisationDisplay();
 	}
@@ -69,7 +69,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		
 		
 		farmerFrame.setTitle("Farmer Clicker");
-		displayProducts(productFactory.createFarmerProducts());
+		displayProducts(productSimpleFactory.createFarmerProductsSimple());
 		displayConsumables(consumableFactory.createFarmerConsumables());
 		nbWheatText = new JTextField("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat));
 		nbWheatText.setHorizontalAlignment(JTextField.CENTER);
@@ -215,12 +215,12 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 			progressBar.setValue(nbWheat);
 		}
 	}
-
+	
 	/**
-	 * @return the productFactory
+	 * @return the productSimpleFactory
 	 */
-	public ProductFactory getProductFactory() {
-		return (ProductFactory) productFactory;
+	public ProductsSimpleFactory getProductFactory() {
+		return (ProductsSimpleFactory) productSimpleFactory;
 	}
 
 	/**

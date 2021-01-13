@@ -1,6 +1,6 @@
 package appli.models;
 
-public class Products {
+public abstract class Products {
 	
 	private int price;
 	private double wheatAugmentation;
