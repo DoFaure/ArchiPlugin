@@ -72,6 +72,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		displayProducts(productFactory.createFarmerProducts());
 		displayConsumables(consumableFactory.createFarmerConsumables());
 		nbWheatText = new JTextField("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat));
+		nbWheatText.setHorizontalAlignment(JTextField.CENTER);
 		
 		nbWheatText.setEditable(false);
 		c.gridx = 1;
@@ -103,7 +104,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					objectYDisplay += 2;
 				}
 				
-				JButton buttonProduct = new JButton(product.getLabel());
+				JButton buttonProduct = new JButton(product.getLabel() + " (+ " + (int) product.getWheatAugmentation() + "/c)");
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay;
 				this.farmerPanel.add(buttonProduct, c);
@@ -159,7 +160,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					objectYDisplay += 2;
 				}
 				
-				JButton buttonConsommable = new JButton(consumable.getLabel());
+				JButton buttonConsommable = new JButton(consumable.getLabel() + " (+ " + (int) consumable.getWheatAugmentation() + "/s | " + (int) consumable.getDuration() + "s)");
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay;
 				this.farmerPanel.add(buttonConsommable, c);
