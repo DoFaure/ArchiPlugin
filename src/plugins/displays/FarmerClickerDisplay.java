@@ -3,6 +3,7 @@ package plugins.displays;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -37,6 +38,10 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	private JFrame farmerFrame; // Window farmerClicker
 	private JPanel farmerPanel;
 	private GridBagConstraints c;
+
+	private final int NB_MAX_OBJECTS_BY_LINE = 3;
+	private int objectXDisplay = 0;
+	private int objectYDisplay = 0;
 	
 	private static JTextField nbWheatText; // show number of wheat
 	private static ArrayList<JProgressBar> listProgressBar = new ArrayList<JProgressBar>();
@@ -56,25 +61,26 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		this.farmerPanel.setLayout(new GridBagLayout());
 		
 		this.c = new GridBagConstraints();
+		c.insets = new Insets(3,3,3,3);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 2;
-		
-		JLabel testLabel = new JLabel("Farmer Label");
-		this.farmerPanel.add(testLabel, c);
 		
 		this.farmerFrame.add(farmerPanel);
 		
 		
 		farmerFrame.setTitle("Farmer Clicker");
-		nbWheatText = new JTextField("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat));
-		nbWheatText.setEditable(false);
-		this.farmerPanel.add(nbWheatText);
 		displayProducts(productFactory.createFarmerProducts());
 		displayConsumables(consumableFactory.createFarmerConsumables());
+		nbWheatText = new JTextField("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat));
+		
+		nbWheatText.setEditable(false);
+		c.gridx = 1;
+		c.gridy = objectYDisplay + 2;
+		c.gridwidth = NB_MAX_OBJECTS_BY_LINE;
+		this.farmerPanel.add(nbWheatText, c);
+		
 		clickerEvent();
 		farmerFrame.setPreferredSize(new Dimension(800, 800));
-		farmerFrame.setLocation(700, 400); // window position at launch
+		farmerFrame.setLocation(0, 0); // window position at launch
 		farmerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // action launched when exit clicked
 		farmerFrame.pack();
 		farmerFrame.setVisible(true);
@@ -82,25 +88,33 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 	@Override
 	public void displayProducts(List<Products> products) {
+		JLabel productsLabel = new JLabel("Produits :");
+		c.gridx = objectXDisplay;
+		c.gridy = objectYDisplay;
+		this.farmerPanel.add(productsLabel, c);
+		
+		objectXDisplay++;
+		
 		if (products != null && !products.isEmpty()) {
-			int positionXPrdt = 0;
-			int positionYPrdt = 0;
-			
 			for (Products product : products) {
+				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) {
+					objectXDisplay = 1;
+					objectYDisplay += 2;
+				}
+				
 				JButton buttonProduct = new JButton(product.getLabel());
+				c.gridx = objectXDisplay;
+				c.gridy = objectYDisplay;
+				this.farmerPanel.add(buttonProduct, c);
+				
 				JProgressBar progressBar = new JProgressBar(0, product.getPrice());
 				progressBar.setValue(nbWheat); 
-				listProgressBar.add(progressBar);
-				
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = positionXPrdt;
-				c.gridy = positionYPrdt;
-
-				this.farmerPanel.add(buttonProduct, c);
-				c.gridx = positionXPrdt++;
-
+				c.gridx = objectXDisplay;
+				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
-				c.gridx = positionXPrdt++;
+				System.out.println(c.gridx);
+				System.out.println(c.gridy);
+				listProgressBar.add(progressBar);
 
 				buttonProduct.addActionListener(new ActionListener() {
 
@@ -115,26 +129,46 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					}
 				});
 				System.out.println(product.toString());
+				
+				objectXDisplay++;
 			}
 		}
+		
+		objectXDisplay = 0;
+		objectYDisplay += 2;
 	}
 
 	@Override
 	public void displayConsumables(List<Consumables> consumables) {
+		JLabel consommablesLabel = new JLabel("Consommables :");
+		c.gridx = objectXDisplay;
+		c.gridy = objectYDisplay;
+		this.farmerPanel.add(consommablesLabel, c);
+		
+		objectXDisplay++;
+		
 		if (consumables != null && !consumables.isEmpty()) {
 			for (Consumables consumable : consumables) {
-				JButton buttonConsumable = new JButton(consumable.getLabel());
+				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) {
+					objectXDisplay = 1;
+					objectYDisplay += 2;
+				}
+				
+				JButton buttonConsommable = new JButton(consumable.getLabel());
+				c.gridx = objectXDisplay;
+				c.gridy = objectYDisplay;
+				this.farmerPanel.add(buttonConsommable, c);
+				
 				JProgressBar progressBar = new JProgressBar(0, consumable.getPrice());
 				progressBar.setValue(nbWheat); 
-				listProgressBar.add(progressBar);
-				
-				c.fill = GridBagConstraints.HORIZONTAL;
-				c.gridx = 0;
-				c.gridy = 0;
-				
-				this.farmerPanel.add(buttonConsumable, c);
+				c.gridx = objectXDisplay;
+				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
-				buttonConsumable.addActionListener(new ActionListener() {
+				System.out.println(c.gridx);
+				System.out.println(c.gridy);
+				listProgressBar.add(progressBar);
+
+				buttonConsommable.addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -147,6 +181,8 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					}
 				});
 				System.out.println(consumable.toString());
+				
+				objectXDisplay++;
 			}
 		}
 	}
