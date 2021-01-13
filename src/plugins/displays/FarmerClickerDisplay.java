@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -74,7 +75,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		
 		nbWheatText.setEditable(false);
 		c.gridx = 1;
-		c.gridy = objectYDisplay + 2;
+		c.gridy = objectYDisplay;
 		c.gridwidth = NB_MAX_OBJECTS_BY_LINE;
 		this.farmerPanel.add(nbWheatText, c);
 		
@@ -136,6 +137,10 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		
 		objectXDisplay = 0;
 		objectYDisplay += 2;
+
+		c.gridy = objectYDisplay;
+		farmerPanel.add(Box.createVerticalStrut(25), c);
+		c.gridy = objectYDisplay++;
 	}
 
 	@Override
@@ -185,6 +190,13 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				objectXDisplay++;
 			}
 		}
+		
+		objectXDisplay = 0;
+		objectYDisplay += 2;
+
+		c.gridy = objectYDisplay;
+		farmerPanel.add(Box.createVerticalStrut(25), c);
+		c.gridy = objectYDisplay++;
 	}
 
 	public void clickerEvent() {
