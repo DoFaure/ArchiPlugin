@@ -1,11 +1,14 @@
 {
-	 "application.interfaces.IAppClicker": {
+	 "appli.interfaces.IAppClicker": {
         "applicationClicker": {
-            "class": "plugins.applications.AppClicker",
+            "class": "plugins.application.AppClicker",
             "description": "Application principale",
             "dependencies": [
                 {
-                    "interface": "application.interfaces.IFarmerClickerDisplay"
+                    "interface": "appli.interfaces.IFarmerClickerDisplay"
+                },
+                {
+                	"interface": "appli.interfaces.IBrewerClickerDisplay"
                 }
             ]
         }
@@ -24,6 +27,14 @@
             	{
             		"interface": "appli.interfaces.ICo2Management"
             	}
+            ]
+        }
+    },
+	"appli.interfaces.IBrewerClickerDisplay": {
+        "brewerClickerConfig": {
+            "class": "plugins.displays.BrewerClickerDisplay",
+            "description": "Application clicker avec un brasseur",
+            "dependencies": [
             ]
         }
     },
