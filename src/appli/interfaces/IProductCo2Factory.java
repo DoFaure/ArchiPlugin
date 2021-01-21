@@ -2,10 +2,10 @@ package appli.interfaces;
 
 import java.util.List;
 
-import appli.models.Products;
+import appli.models.ProductsCo2;
 
 public interface IProductCo2Factory {
 	
-	public List<Products> createFarmerProductsCo2();
+	public List<ProductsCo2> createFarmerProductsCo2();
 
 }

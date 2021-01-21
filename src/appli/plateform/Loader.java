@@ -44,6 +44,10 @@ public class Loader {
 		IAppClicker app = (IAppClicker) loader.getConfiguredPlugin("application.interfaces.IAppClicker");
 		app.run();
 	}
+	
+	public static void loadPlugin() {
+		
+	}
 
 	/**
 	 * Parse plugins.json file to push all the plugins into the map "plugins"

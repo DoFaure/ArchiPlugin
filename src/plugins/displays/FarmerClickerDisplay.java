@@ -23,8 +23,8 @@ import appli.interfaces.ICo2Management;
 import appli.interfaces.IConsumableFactory;
 import appli.interfaces.IFarmerClickerDisplay;
 import appli.interfaces.IProductsSimpleFactory;
-import appli.models.Consumables;
-import appli.models.Products;
+import appli.models.Consumables; 
+import appli.models.ProductsSimple;
 import plugins.factories.ConsumableFactory;
 import plugins.factories.ProductsSimpleFactory;
 
@@ -46,6 +46,8 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	
 	private static JTextField nbWheatText; // show number of wheat
 	private static ArrayList<JProgressBar> listProgressBar = new ArrayList<JProgressBar>();
+	
+	private boolean isProductCo2 = false;
 
 	public FarmerClickerDisplay(IProductsSimpleFactory productSimpleFactory, IConsumableFactory consumableFactory, ICo2Management Co2management) {
 		super();
@@ -57,6 +59,8 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	}
 	
 	public void initialisationDisplay() {
+		this.isProductCo2 = false;
+		
 		this.farmerFrame = new JFrame();
 		this.farmerPanel = new JPanel();
 		this.farmerPanel.setLayout(new GridBagLayout());
@@ -66,8 +70,6 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
 		this.farmerFrame.add(farmerPanel);
-		
-		
 		farmerFrame.setTitle("Farmer Clicker");
 		displayProducts(productSimpleFactory.createFarmerProductsSimple());
 		displayConsumables(consumableFactory.createFarmerConsumables());
@@ -103,7 +105,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					objectXDisplay = 1;
 					objectYDisplay += 2;
 				}
-				Products product = (Products) productObject; 
+				ProductsSimple product = (ProductsSimple) productObject; 
 				
 				JButton buttonProduct = new JButton(product.getLabel() + " (+ " + (int) product.getWheatAugmentation() + "/c)");
 				c.gridx = objectXDisplay;
@@ -115,8 +117,6 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
-				System.out.println(c.gridx);
-				System.out.println(c.gridy);
 				listProgressBar.add(progressBar);
 	
 				buttonProduct.addActionListener(new ActionListener() {
@@ -126,7 +126,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 						if (nbWheat >= product.getPrice()) {
 							nbWheatByClick += product.getWheatAugmentation();
 							nbWheat -= product.getPrice();
-							
+							if(product.getCo2Production() > 0) addCo2Products();
 							updateComponents();
 						}
 					}
@@ -171,8 +171,6 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
-				System.out.println(c.gridx);
-				System.out.println(c.gridy);
 				listProgressBar.add(progressBar);
 
 				buttonConsommable.addActionListener(new ActionListener() {
@@ -208,6 +206,13 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				updateComponents();
 			}
 		});
+	}
+	
+	public void addCo2Products() {
+		if(isProductCo2 == false) {
+//			displayProducts();
+			isProductCo2 = true;
+		}
 	}
 	
 	public static void updateComponents() {
