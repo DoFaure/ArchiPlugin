@@ -12,20 +12,8 @@
                     {
                         "name": "consumable-factory",
                         "dependencies": []
-                    },
-                    {
-                        "name": "co2-management",
-                        "dependencies": [
-                            {
-                                "name":"product-co2-factory"
-                            }
-                        ]
                     }
                 ]
-            },
-            {
-            	"name" : "brewerClickerConfig",
-            	"dependencies" : []
             }
         ]
     }

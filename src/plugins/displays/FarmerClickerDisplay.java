@@ -18,13 +18,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
-import appli.interfaces.ICo2Management;
 import appli.interfaces.IConsumableFactory;
 import appli.interfaces.IFarmerClickerDisplay;
+import appli.interfaces.IProductCo2Factory;
 import appli.interfaces.IProductsSimpleFactory;
-import appli.models.Consumables; 
+import appli.models.Consumables;
+import appli.models.Products;
 import appli.models.ProductsSimple;
+import appli.plateform.Loader;
 import plugins.factories.ConsumableFactory;
 import plugins.factories.ProductsSimpleFactory;
 
@@ -49,7 +52,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	
 	private boolean isProductCo2 = false;
 
-	public FarmerClickerDisplay(IProductsSimpleFactory productSimpleFactory, IConsumableFactory consumableFactory, ICo2Management Co2management) {
+	public FarmerClickerDisplay(IProductsSimpleFactory productSimpleFactory, IConsumableFactory consumableFactory) {
 		super();
 		FarmerClickerDisplay.nbWheat = 0;
 		this.nbWheatByClick = 1;
@@ -105,7 +108,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					objectXDisplay = 1;
 					objectYDisplay += 2;
 				}
-				ProductsSimple product = (ProductsSimple) productObject; 
+				Products product =  (Products) productObject; 
 				
 				JButton buttonProduct = new JButton(product.getLabel() + " (+ " + (int) product.getWheatAugmentation() + "/c)");
 				c.gridx = objectXDisplay;
@@ -126,7 +129,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 						if (nbWheat >= product.getPrice()) {
 							nbWheatByClick += product.getWheatAugmentation();
 							nbWheat -= product.getPrice();
-							if(product.getCo2Production() > 0) addCo2Products();
+							if(((ProductsSimple) product).getCo2Production() > 0) addCo2Products();
 							updateComponents();
 						}
 					}
@@ -210,7 +213,9 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	
 	public void addCo2Products() {
 		if(isProductCo2 == false) {
-//			displayProducts();
+			IProductCo2Factory productCo2Factory = (IProductCo2Factory) Loader.loadPlugin("product-co2-factory");
+			displayProducts(productCo2Factory.createFarmerProductsCo2());
+			SwingUtilities.updateComponentTreeUI(farmerFrame);
 			isProductCo2 = true;
 		}
 	}

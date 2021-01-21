@@ -23,7 +23,7 @@ import appli.interfaces.IAppClicker;
 
 public class Loader {	
 
-	private Map<String,DescripteurPlugin> plugins = new HashMap<String,DescripteurPlugin>();
+	private static Map<String,DescripteurPlugin> plugins = new HashMap<String,DescripteurPlugin>();
 
 	private String path;
 
@@ -45,9 +45,12 @@ public class Loader {
 		app.run();
 	}
 	
-	public static void loadPlugin() {
-		
+	public static Object loadPlugin(String identifier) {
+			DescripteurPlugin plugin = plugins.get(identifier);
+			return Loader.getPluginWithoutDependencies(plugin);
+
 	}
+	
 
 	/**
 	 * Parse plugins.json file to push all the plugins into the map "plugins"
@@ -111,7 +114,7 @@ public class Loader {
 	 * @param descriptionDisplayDisponibles the descriptionDisplayDisponibles to set
 	 */
 	public void setDescriptionDisplayDisponibles(Map<String, DescripteurPlugin> descriptionDisplayDisponibles) {
-		this.plugins = descriptionDisplayDisponibles;
+		Loader.plugins = descriptionDisplayDisponibles;
 	}
 	
 	/**
@@ -143,11 +146,11 @@ public class Loader {
 	private Object getPluginFromJson(String interfaceName, JsonObject interfaceJson) throws Exception {
 		String pluginName = interfaceJson.get("name").getAsString();
 
-		DescripteurPlugin pluginDescriptor = this.plugins.get(pluginName);
+		DescripteurPlugin pluginDescriptor = Loader.plugins.get(pluginName);
 
 		//Without dependencies
 		if (pluginDescriptor.getDependencies().size() == 0) {
-			return this.getPluginWithoutDependencies(pluginDescriptor);
+			return Loader.getPluginWithoutDependencies(pluginDescriptor);
 		}
 
 		JsonArray dependenciesJson = interfaceJson.get("dependencies").getAsJsonArray();
@@ -159,7 +162,7 @@ public class Loader {
 			dependencies.add(this.getPluginFromJson(interfaceName, dependencyJsonObject));
 		}
 
-		return this.getPluginWithDependencies(pluginDescriptor, dependencies);
+		return Loader.getPluginWithDependencies(pluginDescriptor, dependencies);
 	}
 	
 	/**
@@ -168,11 +171,11 @@ public class Loader {
 	 * @param dependencies
 	 * @return Object
 	 */
-	public Object getPluginWithDependencies(DescripteurPlugin pluginDescriptor, List<Object> dependencies) {
+	public static Object getPluginWithDependencies(DescripteurPlugin pluginDescriptor, List<Object> dependencies) {
 
 		// If call error and plugin has no dependencies
 		if (dependencies.size() == 0) {
-			return this.getPluginWithoutDependencies(pluginDescriptor);
+			return Loader.getPluginWithoutDependencies(pluginDescriptor);
 		}
 		
 		Class<?>[] dependenciesNames = new Class<?>[pluginDescriptor.getDependencies().size()];
@@ -202,7 +205,7 @@ public class Loader {
 	 * @param pluginDescriptor
 	 * @return Object
 	 */
-	public Object getPluginWithoutDependencies(DescripteurPlugin pluginDescriptor) {
+	public static Object getPluginWithoutDependencies(DescripteurPlugin pluginDescriptor) {
 
 		try {
 			Object plugin = Class.forName(pluginDescriptor.getClassname()).getDeclaredConstructor().newInstance();

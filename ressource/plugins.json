@@ -6,9 +6,6 @@
             "dependencies": [
                 {
                     "interface": "appli.interfaces.IFarmerClickerDisplay"
-                },
-                {
-                	"interface": "appli.interfaces.IBrewerClickerDisplay"
                 }
             ]
         }
@@ -23,18 +20,7 @@
             	},
             	{
             		"interface": "appli.interfaces.IConsumableFactory"
-            	},
-            	{
-            		"interface": "appli.interfaces.ICo2Management"
             	}
-            ]
-        }
-    },
-	"appli.interfaces.IBrewerClickerDisplay": {
-        "brewerClickerConfig": {
-            "class": "plugins.displays.BrewerClickerDisplay",
-            "description": "Application clicker avec un brasseur",
-            "dependencies": [
             ]
         }
     },
@@ -53,17 +39,6 @@
 			"dependencies":[]
 	   }
     },
-    "appli.interfaces.ICo2Management" : {
-   		"co2-management" : {
-   			"class" : "plugins.co2.Co2Management",
-   			"description": "Gestion du CO2 de la ferme ainsi que des produits à charger",
-   			"dependencies": [
-   				{
-   					"interface": "appli.interfaces.IProductCo2Factory"
-   				}
-   			]
-   		}
-   	},
    	"appli.interfaces.IProductCo2Factory": {
 		"product-co2-factory" : {
 			"class": "plugins.factories.ProductCo2Factory",

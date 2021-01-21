@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import appli.interfaces.IAppClicker;
-import appli.interfaces.IBrewerClickerDisplay;
 import appli.interfaces.IFarmerClickerDisplay;
 
 public class AppClicker implements IAppClicker {
@@ -18,12 +17,10 @@ public class AppClicker implements IAppClicker {
 	JButton buttonFarmerClicker = new JButton("Farmer Clicker"); // First button that launch Farmer clicker onClick
 	JButton buttonBrewerClicker = new JButton("Brewer Clicker"); // Second button that launch Brewer clicker onClick
 	IFarmerClickerDisplay farmerDisplay;
-	IBrewerClickerDisplay brewerDisplay;
 
 	// DEFAULT CONSTRUCTOR
-	public AppClicker(IFarmerClickerDisplay farmerDisplay, IBrewerClickerDisplay brewerDisplay) {
+	public AppClicker(IFarmerClickerDisplay farmerDisplay) {
 		this.farmerDisplay = farmerDisplay;
-		this.brewerDisplay = brewerDisplay;
 	}
 
 	/*
