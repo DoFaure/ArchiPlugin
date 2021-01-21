@@ -121,17 +121,20 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
 				listProgressBar.add(progressBar);
-	
+				
 				buttonProduct.addActionListener(new ActionListener() {
-	
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (nbWheat >= product.getPrice()) {
 							nbWheatByClick += product.getWheatAugmentation();
 							nbWheat -= product.getPrice();
-							if(((ProductsSimple) product).getCo2Production() > 0) addCo2Products();
+							if(product.getClass().getSimpleName().equals(ProductsSimple.class.getSimpleName()) ) {
+								if(((ProductsSimple) product).getCo2Production() > 0) addCo2Products();
+									
+							}
 							updateComponents();
 						}
+						
 					}
 				});
 				System.out.println(product.toString());
@@ -215,6 +218,10 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		if(isProductCo2 == false) {
 			IProductCo2Factory productCo2Factory = (IProductCo2Factory) Loader.loadPlugin("product-co2-factory");
 			displayProducts(productCo2Factory.createFarmerProductsCo2());
+			c.gridx = 1;
+			c.gridy = objectYDisplay;
+			c.gridwidth = NB_MAX_OBJECTS_BY_LINE;
+			this.farmerPanel.add(nbWheatText, c);
 			SwingUtilities.updateComponentTreeUI(farmerFrame);
 			isProductCo2 = true;
 		}
