@@ -33,12 +33,14 @@ import plugins.factories.ConsumableFactory;
 import plugins.factories.ProductsSimpleFactory;
 
 public class FarmerClickerDisplay implements IFarmerClickerDisplay {
-	
+	// Factories we need to start the app
 	private IProductsSimpleFactory productSimpleFactory;
 	private IConsumableFactory consumableFactory;
-
+	
+	// Nb Wheat and co2 produce by the user 
 	public static int nbWheat;
 	public static int nbCo2;
+	
 	private int nbWheatByClick;
 	
 	// Window farmerClicker
@@ -56,9 +58,12 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	private static JTextField nbWheatText; 
 	// show number of co2
 	private static JTextField nbCo2Text; 
+	// List of progressBar for all the products and consumables
 	private static ArrayList<JProgressBar> listProgressBar = new ArrayList<JProgressBar>();
+	// ProgressBar of the co2 production
 	private static JProgressBar co2ProgressBar = new JProgressBar();
 	
+	// Boolean to know if have already load the Co2 prodcuts 
 	private static boolean isProductCo2 = false;
 
 	public FarmerClickerDisplay(IProductsSimpleFactory productSimpleFactory, IConsumableFactory consumableFactory) {
@@ -71,30 +76,32 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	}
 	
 	public void initialisationDisplay() {
-		this.isProductCo2 = false;
-		
+		// Instanciate the Frame and the Panel
 		this.farmerFrame = new JFrame();
 		this.farmerPanel = new JPanel();
+		// Set the Frame in a GridBagLayout
 		this.farmerPanel.setLayout(new GridBagLayout());
 		
+		// Create the GridBagLayout with an insets of 3, center horizontally
 		this.c = new GridBagConstraints();
 		c.insets = new Insets(3,3,3,3);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
+		// Initiate the Frame with a title and the basic products and consumables 
 		this.farmerFrame.add(farmerPanel);
 		farmerFrame.setTitle("Farmer Clicker");
 		displayProducts(productSimpleFactory.createFarmerProductsSimple());
 		displayConsumables(consumableFactory.createFarmerConsumables());
+		
+		// Add a TextField for the nb of wheat of the user
 		nbWheatText = new JTextField("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat) + "$");
 		nbWheatText.setHorizontalAlignment(JTextField.CENTER);
-		
 		nbWheatText.setEditable(false);
 		c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 		c.gridy = NB_MAX_ITEMS;
 		this.farmerPanel.add(nbWheatText, c);
 		
-		
-		
+		// Set the position and dimension of the frame
 		clickerEvent();
 		farmerFrame.setPreferredSize(new Dimension(1200, 1000));
 		farmerFrame.setLocation(200, 150); // window position at launch
@@ -242,6 +249,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 	public void clickerEvent() {
 		this.farmerPanel.addMouseListener(new MouseAdapter() {
+			// Increase the wheat to each click
 			public void mousePressed(MouseEvent me) {
 				nbWheat += nbWheatByClick;
 				updateComponents();
@@ -251,32 +259,41 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	
 	public void addCo2Products() {
 		if(isProductCo2 == false) {
+			// Load the new consummable ans add it to the frame
 			IProductCo2Factory productCo2Factory = (IProductCo2Factory) Loader.loadPlugin("product-co2-factory");
 			displayProducts(productCo2Factory.createFarmerProductsCo2());
 			c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 			c.gridy = NB_MAX_ITEMS;
 			this.farmerPanel.add(nbWheatText, c);
 			
+			// Instanciate the new textField for nbCo2 and add it to the frame
 			nbCo2Text = new JTextField("Co2 :" + Integer.toString(FarmerClickerDisplay.nbCo2));
 			nbCo2Text.setHorizontalAlignment(JTextField.CENTER);
-			
 			nbCo2Text.setEditable(false);
 			c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 			c.gridy = NB_MAX_ITEMS + 1;
 			this.farmerPanel.add(nbCo2Text, c);
 			
+			// Instanciate the progressBar corresponding to the co2 of the user 
 			co2ProgressBar = new JProgressBar(0, NB_CO2_MAX);
 			co2ProgressBar.setValue(nbCo2); 
 			c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 			c.gridy = NB_MAX_ITEMS + 2;
 			this.farmerPanel.add(co2ProgressBar, c);
 			
+			// Reload the Frame
 			SwingUtilities.updateComponentTreeUI(farmerFrame);
 			isProductCo2 = true;
 		}
 	}
 	
 	public static void updateComponents() {
+//		if(nbCo2 >= NB_CO2_MAX) {
+//			isProductCo2 = false;
+//			nbCo2 = 0;
+//			nbWheat = 0;
+//		}
+		// Update the value of each progress bar
 		nbWheatText.setText("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat)+ "$");
 		for (JProgressBar progressBar : listProgressBar) {
 			progressBar.setValue(nbWheat);
