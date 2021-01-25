@@ -12,12 +12,12 @@ public class ConsumableFactory implements IConsumableFactory {
 	public List<Consumables> createFarmerConsumables() {
 		List<Consumables> consumablesFarmer = new ArrayList<Consumables>();
 		// Prix, duree, augmentation, nom
-		consumablesFarmer.add(new Consumables(2, 2, 2, "Bouteille d'eau"));
-		consumablesFarmer.add(new Consumables(5, 3, 3, "Coca-Cola"));
-		consumablesFarmer.add(new Consumables(10, 5, 5, "P'tit LU"));
-		consumablesFarmer.add(new Consumables(100, 8, 20, "Engrais"));
-		consumablesFarmer.add(new Consumables(500, 10, 100, "Glyphosate"));
-		consumablesFarmer.add(new Consumables(1000, 5, 500, "SuperFarmer"));
+		consumablesFarmer.add(new Consumables(10, 2, 2, "Bouteille d'eau"));
+		consumablesFarmer.add(new Consumables(50, 3, 3, "Coca-Cola"));
+		consumablesFarmer.add(new Consumables(100, 5, 5, "P'tit LU"));
+		consumablesFarmer.add(new Consumables(500, 8, 20, "Engrais"));
+		consumablesFarmer.add(new Consumables(1000, 10, 100, "Glyphosate"));
+		consumablesFarmer.add(new Consumables(3000, 5, 500, "SuperFarmer"));
 		return consumablesFarmer;
 	}
 

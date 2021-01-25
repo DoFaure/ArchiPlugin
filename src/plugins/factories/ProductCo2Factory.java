@@ -17,7 +17,7 @@ public class ProductCo2Factory implements IProductCo2Factory{
 
 		ProductsCo2Farmer.add(new ProductsCo2(25, 2 , "Recolteur d'eau de pluie", 25));
 		ProductsCo2Farmer.add(new ProductsCo2(150, 8 , "Serre", 50));
-		ProductsCo2Farmer.add(new ProductsCo2(200, 10 , "Moissonneuse", 100));
+		ProductsCo2Farmer.add(new ProductsCo2(200, 10 , "Lombricomposteur", 100));
 		ProductsCo2Farmer.add(new ProductsCo2(1500, 100 , "Ferme ecolo", 500));
 		
 		
