@@ -106,7 +106,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	@Override
 	public void displayProducts(List<?> products) {
 		JLabel productsLabel = new JLabel();
-		switch(products.get(0).getClass().getSimpleName()) {
+		switch(products.get(0).getClass().getSimpleName()) { // Chargement du label de la catégorie de l'objet
 			case "ProductsSimple":
 				productsLabel = new JLabel("Produits :");
 				break;
@@ -115,24 +115,26 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				break;
 			default: break;
 		}
-		System.out.println(products.get(0).getClass().getSimpleName());
 		
 		c.gridx = objectXDisplay;
 		c.gridy = objectYDisplay;
-		this.farmerPanel.add(productsLabel, c);
+		this.farmerPanel.add(productsLabel, c); // Affichage du label de la catégorie de l'objet
 		
 		objectXDisplay++;
 		
 		if (products != null && !products.isEmpty()) {
-			for (Object productObject : products) {
-				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) {
+			for (Object productObject : products) { // Pour chaque produit
+				
+				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) { // On choisit son emplacement d'affichage, en respectant le nombre max d'objets par ligne
 					objectXDisplay = 1;
 					objectYDisplay += 2;
 				}
 				
-				Products product =  (Products) productObject; 
+				Products product = (Products) productObject; 
+				
 				String messageButton = product.getPrice() + "$ : " + product.getLabel() + " (+ " + (int) product.getWheatAugmentation() + "/c";
-				switch(products.get(0).getClass().getSimpleName()) {
+				
+				switch(products.get(0).getClass().getSimpleName()) { // Selon le type du produit (Simple ou Co2), on affiche des infos différentes sur les boutons d'achat du produit
 					case "ProductsSimple":
 						messageButton += " | +" +((ProductsSimple) product).getCo2Production() + "co2)";
 						break;
@@ -142,42 +144,41 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					default: break;
 				}
 
-				JButton buttonProduct = new JButton(messageButton);
+				JButton buttonProduct = new JButton(messageButton); // On affiche le bouton d'achat du produit
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay;
 				this.farmerPanel.add(buttonProduct, c);
 				
-				JProgressBar progressBar = new JProgressBar(0, product.getPrice());
+				JProgressBar progressBar = new JProgressBar(0, product.getPrice()); // On affiche la progressBar d'achat du produit
 				progressBar.setValue(nbWheat); 
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
 				listProgressBar.add(progressBar);
 				
-				buttonProduct.addActionListener(new ActionListener() {
+				buttonProduct.addActionListener(new ActionListener() { // Lorsque l'on achète un produit
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (nbWheat >= product.getPrice()) {
+						if (nbWheat >= product.getPrice()) { // Si on a assez d'argent pour le produit
 							nbWheatByClick += product.getWheatAugmentation();
 							nbWheat -= product.getPrice();
-							if(product.getClass().getSimpleName().equals(ProductsSimple.class.getSimpleName()) ) {
-								if(((ProductsSimple) product).getCo2Production() > 0) {
+							
+							if(product.getClass().getSimpleName().equals(ProductsSimple.class.getSimpleName()) ) { // Si c'est un Produit Simple
+								if(((ProductsSimple) product).getCo2Production() > 0) { // Et que le produit acheté est un produit qui crée du Co2
 									addCo2Products();
-									nbCo2 += ((ProductsSimple) product).getCo2Production();
+									nbCo2 += ((ProductsSimple) product).getCo2Production(); // Alors on affiche les produits Co2 et on ajoute la quantité de Co2
 								}
 									
 							}
-							if(product.getClass().getSimpleName().equals(ProductsCo2.class.getSimpleName()) ) {
-								nbCo2 -= ((ProductsCo2) product).getCo2Reduction();
+							if(product.getClass().getSimpleName().equals(ProductsCo2.class.getSimpleName()) ) { // Si c'est un Produit Co2
+								nbCo2 -= ((ProductsCo2) product).getCo2Reduction(); // Alors on affiche les produits Co2 et on soustrait la quantité de Co2
 							}
-							updateComponents();
+							updateComponents(); // Et enfin, on met à jour les progressBar
 						}
 						
 					}
 				});
-				System.out.println(product.toString());
-				
-				objectXDisplay++;
+				objectXDisplay++; // Puis on incrémente une variable qui indique que le produit suivant sera affiché à droite de celui-ci
 			}
 		}
 		
@@ -185,7 +186,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		objectYDisplay += 2;
 
 		c.gridy = objectYDisplay;
-		farmerPanel.add(Box.createVerticalStrut(25), c);
+		farmerPanel.add(Box.createVerticalStrut(25), c); // Puis on saute une ligne pour faire une séparation dans l'affichage
 		c.gridy = objectYDisplay++;
 	}
 
@@ -194,13 +195,13 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		JLabel consommablesLabel = new JLabel("Consommables :");
 		c.gridx = objectXDisplay;
 		c.gridy = objectYDisplay;
-		this.farmerPanel.add(consommablesLabel, c);
+		this.farmerPanel.add(consommablesLabel, c); // Affichage du label de la catégorie de l'objet
 		
 		objectXDisplay++;
 		
 		if (consumables != null && !consumables.isEmpty()) {
-			for (Consumables consumable : consumables) {
-				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) {
+			for (Consumables consumable : consumables) { // Pour chaque consommable
+				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) { // On choisit son emplacement d'affichage, en respectant le nombre max d'objets par ligne
 					objectXDisplay = 1;
 					objectYDisplay += 2;
 				}
@@ -208,29 +209,26 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				JButton buttonConsommable = new JButton(consumable.getPrice() + "$ : " + consumable.getLabel() + " (+ " + (int) consumable.getWheatAugmentation() + "/s | " + (int) consumable.getDuration() + "s)");
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay;
-				this.farmerPanel.add(buttonConsommable, c);
+				this.farmerPanel.add(buttonConsommable, c); // ON affiche le bouton du consommable
 				
 				JProgressBar progressBar = new JProgressBar(0, consumable.getPrice());
 				progressBar.setValue(nbWheat); 
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
-				listProgressBar.add(progressBar);
+				listProgressBar.add(progressBar); // ON affiche la progressBar du consommable
 
-				buttonConsommable.addActionListener(new ActionListener() {
-
+				buttonConsommable.addActionListener(new ActionListener() { // Si on achète le consommable
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (nbWheat >= consumable.getPrice()) {
+						if (nbWheat >= consumable.getPrice()) { // Si on a assez d'argent
 							nbWheat -= consumable.getPrice();
-							consumable.startTimer();
-							updateComponents();
+							consumable.startTimer(); // Alors on lance le chronomètre et la méthode ajoute toute seule le blé toutes les secondes
+							updateComponents(); // Puis on met à jour les progressBar des objets
 						}
 					}
-				});
-				System.out.println(consumable.toString());
-				
-				objectXDisplay++;
+				});				
+				objectXDisplay++;// Puis on incrémente une variable qui indique que le produit suivant sera affiché à droite de celui-ci
 			}
 		}
 		
@@ -238,7 +236,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		objectYDisplay += 2;
 
 		c.gridy = objectYDisplay;
-		farmerPanel.add(Box.createVerticalStrut(25), c);
+		farmerPanel.add(Box.createVerticalStrut(25), c); // Puis on saute une ligne pour faire une séparation dans l'affichage
 		c.gridy = objectYDisplay++;
 	}
 
@@ -279,11 +277,6 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	}
 	
 	public static void updateComponents() {
-//		if(nbCo2 >= NB_CO2_MAX) {
-//			isProductCo2 = false;
-//			nbCo2 = 0;
-//			nbWheat = 0;
-//		}
 		nbWheatText.setText("Wheat :" + Integer.toString(FarmerClickerDisplay.nbWheat)+ "$");
 		for (JProgressBar progressBar : listProgressBar) {
 			progressBar.setValue(nbWheat);
