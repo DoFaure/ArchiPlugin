@@ -1,5 +1,7 @@
 package appli.plateform;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 import appli.interfaces.IAppClicker;
+import appli.interfaces.IMonitor;
+import plugins.monitor.Monitor;
 
 
 public class Loader {	
@@ -26,9 +30,15 @@ public class Loader {
 	private static Map<String,DescripteurPlugin> plugins = new HashMap<String,DescripteurPlugin>();
 
 	private String path;
+	
+	private static PropertyChangeSupport support;
+	private static String news;
 
 	// CONSTRUCTOR
-	public Loader() throws Exception {
+	public Loader() throws Exception {	
+		
+		support = new PropertyChangeSupport(this);
+		
 		this.path = new File("").getAbsoluteFile().getAbsolutePath().concat(File.separator + "ressource");
 		try {
 			this.getPluginsToMap(path);
@@ -37,13 +47,29 @@ public class Loader {
 		}
 	}
 
-	public static void main(String[] args)
-			throws Exception {
+	public static void main(String[] args) throws Exception {
 		Loader loader = new Loader();
 		
+		IMonitor moniteur = (IMonitor) loader.getConfiguredPlugin("application.interfaces.IMonitor");
+		support.addPropertyChangeListener((PropertyChangeListener) moniteur);
+		
 		IAppClicker app = (IAppClicker) loader.getConfiguredPlugin("application.interfaces.IAppClicker");
-		app.run();
+		
+//		app.run();
 	}
+	
+	public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
+    }
+    
+    public static void setPluginMonitor(String value) {
+        support.firePropertyChange("news", news, value);
+        news = value;
+    }
 	
 	public static Object loadPlugin(String identifier) {
 			DescripteurPlugin plugin = plugins.get(identifier);
@@ -70,7 +96,6 @@ public class Loader {
 		for (Map.Entry<String, JsonElement> entry : entrySet) {
 			createDescripteurPlugin(entry.getKey(), entry.getValue().getAsJsonObject());
 		}
-
 		return plugins;
 
 	}
@@ -82,12 +107,10 @@ public class Loader {
 	 */
 	private void createDescripteurPlugin(String interfaceName, JsonObject pluginAsObject) {
 		Set<Entry<String, JsonElement>> entrySet = pluginAsObject.entrySet();
-
 		for (Map.Entry<String, JsonElement> entry : entrySet) {
 			String name = entry.getKey();
 			String classname = entry.getValue().getAsJsonObject().get("class").getAsString();
 			String description = entry.getValue().getAsJsonObject().get("description").getAsString();
-			System.out.println("name : " + name + ", classname : " + classname + ", description : " + description);
 			List<String> dependencies = new ArrayList<String>();
 			if (entry.getValue().getAsJsonObject().get("dependencies").getAsJsonArray().size() > 0) {
 				entry.getValue().getAsJsonObject().get("dependencies").getAsJsonArray().forEach(item -> {
@@ -95,7 +118,7 @@ public class Loader {
 
 				});
 			}
-			System.out.println("dependencies : " + dependencies);
+//			System.out.println("dependencies : " + dependencies);
 
 			DescripteurPlugin descripteur = new DescripteurPlugin(name, classname, description, dependencies);
 			plugins.put(name, descripteur);
@@ -192,6 +215,7 @@ public class Loader {
 		try {
 			Object plugin = Class.forName(pluginDescriptor.getClassname()).getDeclaredConstructor(dependenciesNames)
 					.newInstance(dependencies.toArray());
+			setPluginMonitor(plugin.getClass().toString());
 			return plugin;
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
 				| SecurityException | InvocationTargetException e) {
@@ -209,6 +233,7 @@ public class Loader {
 
 		try {
 			Object plugin = Class.forName(pluginDescriptor.getClassname()).getDeclaredConstructor().newInstance();
+			setPluginMonitor(plugin.getClass().toString() );
 			return plugin;
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SecurityException  e) {
 			e.printStackTrace();

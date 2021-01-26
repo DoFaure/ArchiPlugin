@@ -16,5 +16,11 @@
                 ]
             }
         ]
+    },
+	"application.interfaces.IMonitor": {
+        "name": "moniteur",
+        "dependencies": []
     }
+	
+
 }

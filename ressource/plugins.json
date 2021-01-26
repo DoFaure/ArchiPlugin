@@ -46,5 +46,13 @@
 			"dependencies":[]
 		}
 
+	},
+	"appli.interfaces.IMonitor": {
+		"moniteur" : {
+			"class": "plugins.monitor.Monitor",
+			"description": "Affichage des differents plugins chargés",
+			"dependencies":[]
+		}
 	}
+	
 }

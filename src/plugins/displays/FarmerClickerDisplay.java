@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +25,13 @@ import javax.swing.SwingUtilities;
 
 import appli.interfaces.IConsumableFactory;
 import appli.interfaces.IFarmerClickerDisplay;
+import appli.interfaces.IMonitor;
 import appli.interfaces.IProductCo2Factory;
 import appli.interfaces.IProductsSimpleFactory;
 import appli.models.Consumables;
 import appli.models.Products;
-import appli.models.ProductsSimple;
 import appli.models.ProductsCo2;
+import appli.models.ProductsSimple;
 import appli.plateform.Loader;
 import plugins.factories.ConsumableFactory;
 import plugins.factories.ProductsSimpleFactory;
@@ -42,7 +46,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	public static int nbCo2;
 	
 	private int nbWheatByClick;
-	
+
 	// Window farmerClicker
 	private JFrame farmerFrame; 
 	private JPanel farmerPanel;
@@ -66,6 +70,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	// Boolean to know if have already load the Co2 prodcuts 
 	private static boolean isProductCo2 = false;
 
+	
 	public FarmerClickerDisplay(IProductsSimpleFactory productSimpleFactory, IConsumableFactory consumableFactory) {
 		super();
 		FarmerClickerDisplay.nbWheat = 0;
@@ -75,7 +80,8 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		initialisationDisplay();
 	}
 	
-	public void initialisationDisplay() {
+	public void initialisationDisplay() {		
+	
 		// Instanciate the Frame and the Panel
 		this.farmerFrame = new JFrame();
 		this.farmerPanel = new JPanel();
@@ -207,10 +213,10 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 	@Override
 	public void displayConsumables(List<Consumables> consumables) {
-		JLabel consommablesLabel = new JLabel("Consommables :");
+		JLabel consumablesLabel = new JLabel("Consommables :");
 		c.gridx = objectXDisplay;
 		c.gridy = objectYDisplay;
-		this.farmerPanel.add(consommablesLabel, c); // Affichage du label de la catégorie de l'objet
+		this.farmerPanel.add(consumablesLabel, c); // Affichage du label de la catégorie de l'objet
 		
 		objectXDisplay++;
 		
@@ -221,10 +227,10 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 					objectYDisplay += 2;
 				}
 				
-				JButton buttonConsommable = new JButton(consumable.getPrice() + "$ : " + consumable.getLabel() + " (+ " + (int) consumable.getWheatAugmentation() + "/s | " + (int) consumable.getDuration() + "s)");
+				JButton buttonConsumable = new JButton(consumable.getPrice() + "$ : " + consumable.getLabel() + " (+ " + (int) consumable.getWheatAugmentation() + "/s | " + (int) consumable.getDuration() + "s)");
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay;
-				this.farmerPanel.add(buttonConsommable, c); // ON affiche le bouton du consommable
+				this.farmerPanel.add(buttonConsumable, c); // ON affiche le bouton du consommable
 				
 				JProgressBar progressBar = new JProgressBar(0, consumable.getPrice());
 				progressBar.setValue(nbWheat); 
@@ -233,7 +239,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				this.farmerPanel.add(progressBar, c);
 				listProgressBar.add(progressBar); // ON affiche la progressBar du consommable
 
-				buttonConsommable.addActionListener(new ActionListener() { // Si on achète le consommable
+				buttonConsumable.addActionListener(new ActionListener() { // Si on achète le consommable
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						if (nbWheat >= consumable.getPrice()) { // Si on a assez d'argent
@@ -333,11 +339,11 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		return farmerPanel;
 	}
 
-	/**
-	 * @param farmerPanel the farmerPanel to set
-	 */
+	@Override
 	public void setFarmerPanel(JPanel farmerPanel) {
-		this.farmerPanel = farmerPanel;
+		// TODO Auto-generated method stub
+		
 	}
+
 
 }

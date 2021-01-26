@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import appli.interfaces.IAppClicker;
 import appli.interfaces.IFarmerClickerDisplay;
+import appli.interfaces.IMonitor;
 
 public class AppClicker implements IAppClicker {
 
