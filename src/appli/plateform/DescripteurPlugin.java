@@ -9,6 +9,14 @@ public class DescripteurPlugin {
 	String description;
 	List<String> dependencies;
 	
+	/**
+	 * Constructor
+	 * @param name
+	 * @param classname
+	 * @param description
+	 * @param dependencies
+	 */
+	
 	public DescripteurPlugin(String name, String classname, String description, List<String> dependencies) {
 		this.name = name;
 		this.classname = classname;

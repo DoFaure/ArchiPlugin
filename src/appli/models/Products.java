@@ -5,6 +5,20 @@ public abstract class Products {
 	private int price;
 	private double wheatAugmentation;
 	private String label;
+	
+	/**
+	 * Constructor
+	 * @param price
+	 * @param wheatAugmentation
+	 * @param label
+	 */
+	
+	public Products(int price, double wheatAugmentation, String label) {
+		super();
+		this.price = price;
+		this.wheatAugmentation = wheatAugmentation;
+		this.label = label;
+	}
 	/**
 	 * @return the price
 	 */
@@ -39,12 +53,6 @@ public abstract class Products {
 	 * @param label the label to set
 	 */
 	public void setLabel(String label) {
-		this.label = label;
-	}
-	public Products(int price, double wheatAugmentation, String label) {
-		super();
-		this.price = price;
-		this.wheatAugmentation = wheatAugmentation;
 		this.label = label;
 	}
 	

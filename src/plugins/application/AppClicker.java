@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 import appli.interfaces.IAppClicker;
 import appli.interfaces.IFarmerClickerDisplay;
-import appli.interfaces.IMonitor;
 
 public class AppClicker implements IAppClicker {
 
@@ -19,35 +18,11 @@ public class AppClicker implements IAppClicker {
 	JButton buttonBrewerClicker = new JButton("Brewer Clicker"); // Second button that launch Brewer clicker onClick
 	IFarmerClickerDisplay farmerDisplay;
 
-	// DEFAULT CONSTRUCTOR
+	/**
+	 * Constructor
+	 */
 	public AppClicker(IFarmerClickerDisplay farmerDisplay) {
 		this.farmerDisplay = farmerDisplay;
-	}
-
-	/*
-	 * Fonction principale
-	 */
-	@Override
-	public void run() {
-
-		
-		// TODO modifie et remplacer PANEL par une nouvelle Frame
-		buttonFarmerClicker.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-//				Loader loader = new Loader();
-//				List<Object> pluginDependencies = new ArrayList<Object>();
-//				pluginDependencies
-//						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(1), null));
-//				pluginDependencies
-//						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(2), null));
-//				pluginDependencies
-//						.add(loader.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(3), null));
-//				FarmerClickerDisplay farmerDisplay = (FarmerClickerDisplay) loader
-//						.instanciatePlugin(loader.getDescriptionDisplayDisponibles().get(0), pluginDependencies);
-				menuFrame.dispose();
-			}
-		});
-
 	}
 
 	/**

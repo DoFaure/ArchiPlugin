@@ -11,6 +11,21 @@ public class Consumables {
 	private int wheatAugmentation;
 	private String label;
 	private Timer timer;
+	
+	/**
+	 * Constructor
+	 * @param price
+	 * @param duration
+	 * @param wheatAugmentation
+	 * @param label
+	 */
+	public Consumables(int price, int duration, int wheatAugmentation, String label) {
+		super();
+		this.price = price;
+		this.duration = duration;
+		this.wheatAugmentation = wheatAugmentation;
+		this.label = label;
+	}
 
 	/**
 	 * @return the price
@@ -65,14 +80,6 @@ public class Consumables {
 	 * @param label the label to set
 	 */
 	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	public Consumables(int price, int duration, int wheatAugmentation, String label) {
-		super();
-		this.price = price;
-		this.duration = duration;
-		this.wheatAugmentation = wheatAugmentation;
 		this.label = label;
 	}
 

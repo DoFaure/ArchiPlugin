@@ -32,9 +32,12 @@ public class Loader {
 	private String path;
 	
 	private static PropertyChangeSupport support;
-	private static String news;
+	private static String observableValue;
 
-	// CONSTRUCTOR
+	/**
+	 * Constructor
+	 * @throws Exception
+	 */
 	public Loader() throws Exception {	
 		
 		support = new PropertyChangeSupport(this);
@@ -54,23 +57,30 @@ public class Loader {
 		support.addPropertyChangeListener((PropertyChangeListener) moniteur);
 		
 		IAppClicker app = (IAppClicker) loader.getConfiguredPlugin("application.interfaces.IAppClicker");
-		
-//		app.run();
 	}
 	
+	/**
+	 * Function to set the observer
+	 * @param pcl
+	 */
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
-
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
-    }
-    
+	
+	/**
+	 * Function to set new value to the observable attribute
+	 * @param value
+	 */
     public static void setPluginMonitor(String value) {
-        support.firePropertyChange("news", news, value);
-        news = value;
+        support.firePropertyChange("observableValue", observableValue, value);
+        observableValue = value;
     }
 	
+    /**
+     * Function to load a Plugin
+     * @param identifier
+     * @return
+     */
 	public static Object loadPlugin(String identifier) {
 			DescripteurPlugin plugin = plugins.get(identifier);
 			return Loader.getPluginWithoutDependencies(plugin);

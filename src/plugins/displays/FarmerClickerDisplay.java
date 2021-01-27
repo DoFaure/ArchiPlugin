@@ -74,7 +74,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	public FarmerClickerDisplay(IProductsSimpleFactory productSimpleFactory, IConsumableFactory consumableFactory) {
 		super();
 		FarmerClickerDisplay.nbWheat = 0;
-		this.nbWheatByClick = 1000;
+		this.nbWheatByClick = 1;
 		this.productSimpleFactory = productSimpleFactory;
 		this.consumableFactory = consumableFactory;
 		initialisationDisplay();
@@ -109,11 +109,6 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 		c.gridy = NB_MAX_ITEMS + 3;
 		farmerPanel.add(Box.createVerticalStrut(25), c); // Puis on saute une ligne pour faire une séparation dans l'affichage
-
-		JButton buttonStats = new JButton("Voir mes stats"); // On affiche le bouton d'achat du produit
-		c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
-		c.gridy = NB_MAX_ITEMS + 4;
-		this.farmerPanel.add(buttonStats, c);
 		
 		// Set the position and dimension of the frame
 		clickerEvent();
