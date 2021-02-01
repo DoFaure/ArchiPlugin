@@ -396,7 +396,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	public void updateComponents() {
 		if (nbCo2 > 0) {
 			if (nbCo2 >= NB_CO2_MAX) {
-				nbCo2 = 500;
+				nbCo2 = NB_CO2_MAX / 2;
 				nbWheat = 0;
 				nbWheatByClick = 1;
 			} else {
