@@ -17,9 +17,8 @@ public class GameManager implements IGameManager {
 			FileWriter myWriter = new FileWriter(path + "/save.txt");
 			myWriter.write(nbWheat + ":" + nbWheatByClick + ":" + nbCo2);
 			myWriter.close();
-			System.out.println("Successfully wrote to the file.");
+			System.out.println("Partie sauvegardée");
 		} catch (IOException e) {
-			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
 	}

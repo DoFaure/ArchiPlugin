@@ -15,10 +15,10 @@ public class ProductCo2Factory implements IProductCo2Factory{
 		
 		List<ProductsCo2> ProductsCo2Farmer = new ArrayList<ProductsCo2>();
 
-		ProductsCo2Farmer.add(new ProductsCo2(25, 2 , "Recolteur d'eau de pluie", 25));
-		ProductsCo2Farmer.add(new ProductsCo2(150, 8 , "Serre", 50));
-		ProductsCo2Farmer.add(new ProductsCo2(200, 10 , "Lombricomposteur", 100));
-		ProductsCo2Farmer.add(new ProductsCo2(1500, 100 , "Ferme ecolo", 500));
+		ProductsCo2Farmer.add(new ProductsCo2(25, 0 , "Recolteur d'eau de pluie", 25));
+		ProductsCo2Farmer.add(new ProductsCo2(150, 2 , "Serre", 50));
+		ProductsCo2Farmer.add(new ProductsCo2(200, 4 , "Lombricomposteur", 100));
+		ProductsCo2Farmer.add(new ProductsCo2(1500, 5 , "Ferme ecolo", 500));
 		
 		
 		return ProductsCo2Farmer;
