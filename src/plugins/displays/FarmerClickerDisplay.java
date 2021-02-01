@@ -158,6 +158,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				nbWheat = array[0];
 				nbWheatByClick = array[1];
 				nbCo2 = array[2];
+				updateComponents();
 			}
 		});
 	}
@@ -245,37 +246,29 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				c.gridy = objectYDisplay + 1;
 				this.farmerPanel.add(progressBar, c);
 				listProgressBar.add(progressBar);
-
-				buttonProduct.addActionListener(new ActionListener() { // Lorsque l'on achète un produit
+				
+				// Lorsque l'on achète un produit
+				buttonProduct.addActionListener(new ActionListener() { 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if (nbWheat >= product.getPrice()) { // Si on a assez d'argent pour le produit
+						// Si on a assez d'argent pour le produit
+						if (nbWheat >= product.getPrice()) { 
 							nbWheatByClick += product.getWheatAugmentation();
 							nbWheat -= product.getPrice();
-
-							if (product.getClass().getSimpleName().equals(ProductsSimple.class.getSimpleName())) { // Si
-																													// c'est
-																													// un
-																													// Produit
-																													// Simple
-								if (((ProductsSimple) product).getCo2Production() > 0) { // Et que le produit acheté est
-																							// un produit qui crée du
-																							// Co2
+							// Si c'est un Produit Simple
+							if (product.getClass().getSimpleName().equals(ProductsSimple.class.getSimpleName())) { 
+								// Et que le produit acheté est un produit qui crée du Co2
+								if (((ProductsSimple) product).getCo2Production() > 0) { 
 									addCo2Products();
-									nbCo2 += ((ProductsSimple) product).getCo2Production(); // Alors on affiche les
-																							// produits Co2 et on ajoute
-																							// la quantité de Co2
+									// Alors on affiche les produits Co2 et on ajoute la quantité de Co2
+									nbCo2 += ((ProductsSimple) product).getCo2Production(); 
 								}
 
 							}
-							if (product.getClass().getSimpleName().equals(ProductsCo2.class.getSimpleName())) { // Si
-																												// c'est
-																												// un
-																												// Produit
-																												// Co2
-								nbCo2 -= ((ProductsCo2) product).getCo2Reduction(); // Alors on affiche les produits Co2
-																					// et on soustrait la quantité de
-																					// Co2
+							// Si c'est un Produit Co2
+							if (product.getClass().getSimpleName().equals(ProductsCo2.class.getSimpleName())) { 
+								// Alors on affiche les produits Co2 et on soustrait la quantité de Co2
+								nbCo2 -= ((ProductsCo2) product).getCo2Reduction(); 
 							}
 							updateComponents(); // Et enfin, on met à jour les progressBar
 						}
@@ -390,19 +383,20 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 			isProductCo2 = true;
 		}
 	}
-
-	public static void updateComponents() {
-//		if(nbCo2 >= NB_CO2_MAX) {
-//			isProductCo2 = false;
-//			nbCo2 = 0;
-//			nbWheat = 0;
-//		}
+	public static void updateWheat() {
 		// Update the value of each progress bar
 		nbWheatText.setText("Blé :" + Integer.toString(FarmerClickerDisplay.nbWheat) + "$");
 		for (JProgressBar progressBar : listProgressBar) {
 			progressBar.setValue(nbWheat);
 		}
+	}
+
+	public void updateComponents() {
+		updateWheat();
 		if (nbCo2 > 0) {
+			if (isProductCo2 == false) {
+				addCo2Products();
+			}
 			nbCo2Text.setText("Co2 :" + Integer.toString(FarmerClickerDisplay.nbCo2) + "/" + NB_CO2_MAX);
 			co2ProgressBar.setValue(nbCo2);
 		}

@@ -111,7 +111,7 @@ public class Consumables {
             public void run() {
                 if (System.currentTimeMillis() - t0 <= duration * 1000) {
                  	FarmerClickerDisplay.nbWheat += wheatAugmentation; 
-                 	FarmerClickerDisplay.updateComponents();         	
+                 	FarmerClickerDisplay.updateWheat();         	
                 } else {
                     cancel();
                 }

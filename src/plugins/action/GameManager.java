@@ -32,7 +32,6 @@ public class GameManager implements IGameManager {
 			String line = br.readLine();
 			if(line != null){
                 String[] splited = line.split(":");
-                System.out.println(splited[0] + " " + splited[1] + " " + splited[2] );
                 for(int i = 0; i < splited.length; i++)
                 	array[i] = Integer.parseInt(splited[i]);
 			} 
