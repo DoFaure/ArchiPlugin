@@ -158,7 +158,7 @@ public class Loader {
 	 */
 	public Object getConfiguredPlugin(String interfaceName) throws Exception {
 
-		FileReader pluginFileReader = new FileReader(path + "/configuration.json");
+		FileReader pluginFileReader = new FileReader(path + "/autorun.json");
 
 		Gson gson = new Gson();
 		JsonReader jsonReader = gson.newJsonReader(pluginFileReader);

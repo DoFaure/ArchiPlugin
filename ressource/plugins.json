@@ -53,6 +53,13 @@
 			"description": "Affichage des differents plugins chargés",
 			"dependencies":[]
 		}
+	},
+	"appli.interfaces.IGameManager": {
+		"game-manager" : {
+			"class": "plugins.action.GameManager",
+			"description": "Gestion de la sauvegarde et du chargement d'une partie'",
+			"dependencies":[]
+		}
 	}
 	
 }
