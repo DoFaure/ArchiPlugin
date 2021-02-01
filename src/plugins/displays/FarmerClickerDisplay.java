@@ -167,8 +167,12 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		String frameTitle = "Error";
 		
 		final JDialog frame = new JDialog(farmerFrame, frameTitle, true);
-		frame.getContentPane().add(farmerPanel);
+		final JPanel dialogPanel = new JPanel();
+        final JLabel error  = new JLabel("Aucune sauvegarde trouvée"); 
+		dialogPanel.add(error);
+		frame.getContentPane().add(dialogPanel);
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 	}
