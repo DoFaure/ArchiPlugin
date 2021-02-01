@@ -111,13 +111,13 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		c.gridy = NB_MAX_ITEMS;
 		this.farmerPanel.add(nbWheatText, c);
 
-		buttonSave = new JButton("sauvegarder"); // On affiche le bouton de sauvegarde
+		buttonSave = new JButton("Sauvegarder la partie"); // On affiche le bouton de sauvegarde
 		c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 		c.gridy = NB_MAX_ITEMS + 4;
 		this.farmerPanel.add(buttonSave, c);
 		this.saveGame();
 
-		buttonCharge = new JButton("charger"); // On affiche le bouton de sauvegarde
+		buttonCharge = new JButton("Charger la dernière partie"); // On affiche le bouton de sauvegarde
 		c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 		c.gridy = NB_MAX_ITEMS + 5;
 		this.farmerPanel.add(buttonCharge, c);
@@ -222,17 +222,16 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 				Products product = (Products) productObject;
 
-				String messageButton = product.getPrice() + "$ : " + product.getLabel() + " (+ "
-						+ (int) product.getWheatAugmentation() + "/c";
+				String messageButton = product.getPrice() + "$ : " + product.getLabel() + " (";
 
 				switch (products.get(0).getClass().getSimpleName()) { // Selon le type du produit (Simple ou Co2), on
 																		// affiche des infos différentes sur les boutons
 																		// d'achat du produit
 				case "ProductsSimple":
-					messageButton += " | +" + ((ProductsSimple) product).getCo2Production() + "co2)";
+					messageButton += "+ " + (int) product.getWheatAugmentation() + "/c | +" + ((ProductsSimple) product).getCo2Production() + "co2)";
 					break;
 				case "ProductsCo2":
-					messageButton += " | -" + ((ProductsCo2) product).getCo2Reduction() + "co2)";
+					messageButton += "-" + ((ProductsCo2) product).getCo2Reduction() + "co2)";
 					break;
 				default:
 					break;
@@ -396,10 +395,17 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	}
 
 	public void updateComponents() {
-		updateWheat();
 		if (nbCo2 > 0) {
-			if (isProductCo2 == false) {
-				addCo2Products();
+			if (nbCo2 >= NB_CO2_MAX) {
+				FarmerClickerDisplay.nbCo2 = 500;
+				FarmerClickerDisplay.nbWheat = 0;
+				nbWheatByClick = 1;
+				updateWheat();
+			} else {
+				if (isProductCo2 == false) {
+					addCo2Products();
+				}
+				updateWheat();
 			}
 			nbCo2Text.setText("Co2 :" + Integer.toString(FarmerClickerDisplay.nbCo2) + "/" + NB_CO2_MAX);
 			co2ProgressBar.setValue(nbCo2);
