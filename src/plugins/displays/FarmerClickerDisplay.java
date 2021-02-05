@@ -110,22 +110,24 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 		c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 		c.gridy = NB_MAX_ITEMS;
 		this.farmerPanel.add(nbWheatText, c);
-
-		buttonSave = new JButton("Sauvegarder la partie"); // On affiche le bouton de sauvegarde
+		
+		// Display save button
+		buttonSave = new JButton("Sauvegarder la partie"); 
 		c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 		c.gridy = NB_MAX_ITEMS + 4;
 		this.farmerPanel.add(buttonSave, c);
 		this.saveGame();
-
-		buttonCharge = new JButton("Charger la dernière partie"); // On affiche le bouton de sauvegarde
+		
+		// Display charge button
+		buttonCharge = new JButton("Charger la dernière partie"); 
 		c.gridx = (NB_MAX_OBJECTS_BY_LINE + 1) / 2;
 		c.gridy = NB_MAX_ITEMS + 5;
 		this.farmerPanel.add(buttonCharge, c);
 		this.loadGame();
-
+		
+		// We jump a line to make a separation 
 		c.gridy = NB_MAX_ITEMS + 3;
-		farmerPanel.add(Box.createVerticalStrut(25), c); // Puis on saute une ligne pour faire une séparation dans
-															// l'affichage
+		farmerPanel.add(Box.createVerticalStrut(25), c); 
 
 		// Set the position and dimension of the frame
 		clickerEvent();
@@ -137,7 +139,8 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	}
 
 	public void loadGame() {
-		buttonCharge.addActionListener(new ActionListener() { // Lorsque l'on achète un produit
+		// Triggered when a click on buttonCharge
+		buttonCharge.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int[] array = new int[3];
@@ -162,10 +165,12 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 			}
 		});
 	}
-
+	
+	/**
+	 * Show a dialog error 
+	 */
 	public void showDialog() {
 		String frameTitle = "Error";
-		
 		final JDialog frame = new JDialog(farmerFrame, frameTitle, true);
 		final JPanel dialogPanel = new JPanel();
         final JLabel error  = new JLabel("Aucune sauvegarde trouvée"); 
@@ -178,7 +183,8 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	}
 
 	public void saveGame() {
-		buttonSave.addActionListener(new ActionListener() { // Lorsque l'on achète un produit
+		// Triggered when we click on buttonSave
+		buttonSave.addActionListener(new ActionListener() { 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (gameManager == null) {
@@ -194,28 +200,31 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 	@Override
 	public void displayProducts(List<?> products) {
 		JLabel productsLabel = new JLabel();
-		switch (products.get(0).getClass().getSimpleName()) { // Chargement du label de la catégorie de l'objet
-		case "ProductsSimple":
-			productsLabel = new JLabel("Produits :");
-			break;
-		case "ProductsCo2":
-			productsLabel = new JLabel("Produits écolos :");
-			break;
-		default:
-			break;
+		// Charge the category label of the object
+		switch (products.get(0).getClass().getSimpleName()) { 
+			case "ProductsSimple":
+				productsLabel = new JLabel("Produits :");
+				break;
+			case "ProductsCo2":
+				productsLabel = new JLabel("Produits écolos :");
+				break;
+			default:
+				break;
 		}
 
 		c.gridx = objectXDisplay;
 		c.gridy = objectYDisplay;
-		this.farmerPanel.add(productsLabel, c); // Affichage du label de la catégorie de l'objet
+		
+		// Display the category label of the object 
+		this.farmerPanel.add(productsLabel, c); 
 
 		objectXDisplay++;
 
 		if (products != null && !products.isEmpty()) {
-			for (Object productObject : products) { // Pour chaque produit
-
-				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) { // On choisit son emplacement d'affichage, en respectant
-																// le nombre max d'objets par ligne
+			for (Object productObject : products) { 
+				
+				// We choose location of the display by respecting the max objects per line
+				if (objectXDisplay > NB_MAX_OBJECTS_BY_LINE) { 
 					objectXDisplay = 1;
 					objectYDisplay += 2;
 				}
@@ -224,7 +233,7 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 
 				String messageButton = product.getPrice() + "$ : " + product.getLabel() + " (+ " + (int) product.getWheatAugmentation() + "/c | " ;
 				
-				// Selon le type du produit (Simple ou Co2), on affiche des infos différentes sur les boutons d'achat du produit
+				// According to the product type (Simple or Co2) we display differents informations on on the buttonProduct
 				switch (products.get(0).getClass().getSimpleName()) { 
 				case "ProductsSimple":
 					messageButton += "+ " + ((ProductsSimple) product).getCo2Production() + "co2)";
@@ -235,14 +244,15 @@ public class FarmerClickerDisplay implements IFarmerClickerDisplay {
 				default:
 					break;
 				}
-
-				JButton buttonProduct = new JButton(messageButton); // On affiche le bouton d'achat du produit
+				
+				// Display the product button 
+				JButton buttonProduct = new JButton(messageButton); 
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay;
 				this.farmerPanel.add(buttonProduct, c);
-
-				JProgressBar progressBar = new JProgressBar(0, product.getPrice()); // On affiche la progressBar d'achat
-																					// du produit
+				
+				// Display the progressBar of the product
+				JProgressBar progressBar = new JProgressBar(0, product.getPrice()); 
 				progressBar.setValue(nbWheat);
 				c.gridx = objectXDisplay;
 				c.gridy = objectYDisplay + 1;
