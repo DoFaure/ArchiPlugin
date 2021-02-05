@@ -40,9 +40,12 @@ public class Loader {
 	 */
 	public Loader() throws Exception {	
 		
+		// Initialize our observable
 		support = new PropertyChangeSupport(this);
 		
+		// Initialize the path of our plugins
 		this.path = new File("").getAbsoluteFile().getAbsolutePath().concat(File.separator + "ressource");
+		// Try to load our plugins into our plugins Map
 		try {
 			this.getPluginsToMap(path);
 		} catch (IOException | ParseException e) {
@@ -53,9 +56,13 @@ public class Loader {
 	public static void main(String[] args) throws Exception {
 		Loader loader = new Loader();
 		
+		// Load the plugin Monitor
 		IMonitor moniteur = (IMonitor) loader.getConfiguredPlugin("application.interfaces.IMonitor");
+		
+		// Set the observer
 		support.addPropertyChangeListener((PropertyChangeListener) moniteur);
 		
+		// When we instanciate IAppClicker, call the constructor and run the app
 		IAppClicker app = (IAppClicker) loader.getConfiguredPlugin("application.interfaces.IAppClicker");
 	}
 	
@@ -97,12 +104,13 @@ public class Loader {
 	 */
 	private Map<String,DescripteurPlugin> getPluginsToMap(String path) throws IOException, ParseException {
 		FileReader pluginFileReader = new FileReader(path + "/plugins.json");
-		// TODO : ajouter la doc pour importer GSON
-
+		
+		// Parse the json file to transform into object map<PluginName, DescripteurPlugin> 
 		Gson gson = new Gson();
 		JsonReader jsonReader = gson.newJsonReader(pluginFileReader);
 		JsonObject jsonObject = gson.fromJson(jsonReader, JsonObject.class);
 		Set<Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
+		// Create descripteur plugin
 		for (Map.Entry<String, JsonElement> entry : entrySet) {
 			createDescripteurPlugin(entry.getKey(), entry.getValue().getAsJsonObject());
 		}
@@ -117,6 +125,7 @@ public class Loader {
 	 */
 	private void createDescripteurPlugin(String interfaceName, JsonObject pluginAsObject) {
 		Set<Entry<String, JsonElement>> entrySet = pluginAsObject.entrySet();
+		// Get every param of a plugin
 		for (Map.Entry<String, JsonElement> entry : entrySet) {
 			String name = entry.getKey();
 			String classname = entry.getValue().getAsJsonObject().get("class").getAsString();
@@ -128,8 +137,6 @@ public class Loader {
 
 				});
 			}
-//			System.out.println("dependencies : " + dependencies);
-
 			DescripteurPlugin descripteur = new DescripteurPlugin(name, classname, description, dependencies);
 			plugins.put(name, descripteur);
 		}
@@ -157,7 +164,7 @@ public class Loader {
 	 * @throws Exception
 	 */
 	public Object getConfiguredPlugin(String interfaceName) throws Exception {
-
+		
 		FileReader pluginFileReader = new FileReader(path + "/autorun.json");
 
 		Gson gson = new Gson();
